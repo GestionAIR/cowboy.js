@@ -7,3 +7,8 @@ JS components built on top of [Mootools](http://mootools.net/) to make [GestionA
 
 - **LogBar** : displays a status bar in the bottom of the screen
 - **Toggles** : toggles visibility of an element
+
+## License
+
+cowboy.js is released under the [MIT License](COPYING).
+
