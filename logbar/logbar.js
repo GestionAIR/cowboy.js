@@ -7,7 +7,7 @@ cowboy.LogBar = new Class({
     // status = false because the logbar is not displayed at startup
     this.status = false;
   }
-  , _show: function(duration=null) {
+  , _show: function(duration) {
     // If the logbar is already visible, do nothing
     if (!this.status) {
       // Define animation
