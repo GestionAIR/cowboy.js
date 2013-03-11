@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>cowboy.js</title>
+		<style type="text/css">
+			body {
+				margin: 0 auto 0 auto;
+				width: 800px;
+			}
+			h1 {
+				text-align: center;
+			}
+			.logbar { position:fixed; left:0px; bottom:-56px; width:100%; z-index:98; }
+			.logbar .log-left, 
+				.logbar .log-right,
+				.logbar .log-center { height:56px; background:url(message-sprite.png); float:right; }		
+			.logbar .log-left, .logbar .log-right { width:44%; background-position:0 -63px;   }
+			.logbar .log-center { width:12%; background-position:top center; }
+			.logbar .log-content { position:absolute; margin-top:-1px; width:100%; height:56px;  z-index:99; overflow:hidden; }
+			.logbar .log-content #log { display:block; margin:0 auto; text-align:center; line-height:55px; margin-top:13px; }
+			.logbar .log-content #log.log-load { background:url(spinner.gif) top center no-repeat; }
+			.logbar .log-content #log.log-error { background:url(message-sprite.png) center -230px no-repeat; }
+			.logbar .log-content #log.log-success { background:url(message-sprite.png) center -170px no-repeat; }
+			.logbar .log-content #log.log-warning { background:url(message-sprite.png) center -290px no-repeat; }
+			}
+		</style>
+	</head>
+
+	<body>
+		<h1>Logbar</h1>
+
+		<div>
+			<p>
+				<strong>Logbar control :</strong>
+				<button onclick="LOGBAR._show()">Show</button>
+				<button onclick="LOGBAR._hide()">Hide</button>
+				<button onclick="LOGBAR._show(3000)">Show for 3 seconds</button>
+			</p>
+			<p>
+				<strong>Logbar content :</strong> is supposed to be generated server-side and put in <strong>#log</strong>
+				<button onclick="$('log').set('html', 'Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1')">Text 1</button>
+				<button onclick="$('log').set('html', 'Some server-side generated text')">Some server-side generated text</button>
+			</p>
+			<p>
+				<strong>Logbar status :</strong>
+				<button onclick="$('log').set('class', null).addClass('log-error')">Error</button>
+				<button onclick="$('log').set('class', null).addClass('log-success')">Success</button>
+				<button onclick="$('log').set('class', null).addClass('log-warning')">Warning</button>
+				<button onclick="$('log').set('class', null).addClass('log-load')">Load</button>
+			</p>
+		</div>
+
+		<div class="logbar" id="log-bar">
+			<div class="log-left"></div>
+			<div class="log-center"></div>
+			<div class="log-right"></div>
+			<div class="log-content">
+				<p id="log" class="log-load">Some server-side generated text</p>
+			</div>
+		</div>
+
+		<script src="../mootools/mootools-core.js"></script>
+		<script src="../mootools/mootools-more.js"></script>
+		<script src="../cowboy.js"></script>
+		<script src="logbar.js"></script>
+	</body>
+</html>
