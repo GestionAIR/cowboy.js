@@ -3,7 +3,7 @@
  * Toggles visibility of an element
  */
 cowboy.Toggles = new Class({
-  initialize: function(){
+  initialize: function() {
     var _this = this;
 
     // For each .toggler
@@ -17,7 +17,7 @@ cowboy.Toggles = new Class({
       //button.inject(toggler);
     });
   }
-  , _show : function(e){
+  , _show : function(e) {
     var _this = this;
 
     // Get the element to show/hide
