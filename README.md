@@ -1,4 +1,4 @@
-![alt text](https://raw.github.com/GestionAIR/cowboy.js/master/im/cowboy.png "Logo Cowboy.js")
+![Logo cowboy.js](im/cowboy.png "Logo cowboy.js")
 
 cowboy.js
 =========
