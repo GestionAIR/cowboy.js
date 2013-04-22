@@ -9,6 +9,7 @@ JS components built on top of [Mootools](http://mootools.net/) to make [GestionA
 
 - **LogBar** : displays a status bar in the bottom of the screen
 - **Toggles** : toggles visibility of an element
+- **Select Load Data** : auto loader data into a select element (usefull with an Ajax Transaction with data coming from database) 
 
 ## License
 
