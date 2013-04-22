@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>cowboy.js</title>
+    <style type="text/css">
+      body {
+        margin: 0 auto 0 auto;
+        width: 800px;
+      }
+      h1 {
+        text-align: center;
+      }
+      select { width:150px; margin:0 auto; display:block;}
+    </style>
+  </head>
+
+  <body>
+    <h1>Select Load Data</h1>
+
+    <div>
+      <select id="cowboy" name="cowboy" class="load-data" data-collection="country" data-label="name" data-selected="BS">
+      </select>      
+    </div>
+
+    <script src="../mootools/mootools-core.js"></script>
+    <script src="../mootools/mootools-more.js"></script>
+    <script src="../cowboy.js"></script>
+    <script src="selectLoadData.js"></script>
+    <script type="text/javascript">
+      window.addEvent('domready', function() {
+        new cowboy.SelectLoadData();
+      });
+    </script>
+  </body>
+</html>
