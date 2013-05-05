@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>cowboy.js</title>
+    <style type="text/css">
+      body {
+        margin: 0 auto 0 auto;
+        width: 800px;
+      }
+      h1 {
+        text-align: center;
+      }
+
+      label { margin-top:30px; font-size:13px; }
+
+      input { clear:both; color:#303030; font-size:12px; color:#565656; height:15px; padding:5px; border:1px solid #e5e5e5; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; }
+      input:focus { box-shadow:0px 0px 10px rgba(146, 146, 146, 0.3); }
+
+      input[type="file"], input.file { position:relative; text-align:right; -moz-opacity:0 ; filter:alpha(opacity: 0); opacity:0; z-index:2; width:410px; }
+
+      .inputfile { position:relative; }
+      .fakeinputfile { position:absolute; top:0px; left:0px; z-index:1; width:420px; }
+      .fakeinputfile input { width:344px; padding-left:24px; }
+
+      .directory { background:url('../im/sprite.png'); background-size:26px 100px; background-position:2px -49px; height:19px; width:25px; float:right; padding:3px; border:1px solid #d4d4d4; background-color:#ebebeb; box-shadow:0px 0px 2px 1px white inset; -moz-box-shadow:0px 0px 2px 1px white inset; -webkit-box-shadow:0px 0px 2px 1px white inset; border-radius:5px; -webkit-border-radius:5px; -moz-border-radius:5px; }
+
+      .log-error { background:url('../im/error.gif') no-repeat; background-position:4px 4px; padding-left:24px; }
+      .log-validated { background:url('../im/validated.png') no-repeat; background-position:4px 4px; padding-left:24px; }
+      .log-attention { background:url('../im/attention.png') no-repeat; background-position:4px 4px; padding-left:24px; }
+
+      
+    </style>
+  </head>
+
+  <body>
+    <h1>Input File</h1>
+
+    <div>
+      <label for="simple-test">Simple test (default Options : >=4Ko & <=5Mo)</label>
+      <input type="file" id="simple-test" name="simple-test" /> 
+      
+      <label for="test-options">Test with options (PDF, >=100 ko & <=5Mo)</label>
+      <input type="file" id="test-options" name="test-options" /> 
+
+      <label for="test-options-properties">Test with options passed by element properties (JPG, >=100ko & <=3Mo)</label>
+      <input type="file" id="test-options-properties" name="test-options-properties"
+        data-minSize="100000" data-maxSize="3000000" requiredType="image/jpeg" /> 
+    </div>
+
+    <script src="../mootools/mootools-core.js"></script>
+    <script src="../mootools/mootools-more.js"></script>
+    <script src="../cowboy.js"></script>
+    <script src="inputFile.js"></script>
+    <script type="text/javascript">
+      window.addEvent('domready', function() {
+        new cowboy.InputFile($('simple-test'));
+
+        new cowboy.InputFile($('test-options'),{
+          minSize:100000,
+          maxSize:5000000,
+          requiredType:"application/pdf"
+        });
+
+        new cowboy.InputFile($('test-options-properties'));
+      });
+    </script>
+  </body>
+</html>
