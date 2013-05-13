@@ -1,10 +1,21 @@
 /* 
  * Class cowboy.SelectLoadData
  * Load data by an Ajax request into a Select Element
+ *
+ * TODO : Support List in parameters
+ *          Detect if List is passed in parameters or not
+ *          
  */
 cowboy.SelectLoadData = new Class({
-  initialize: function() {
+  Implements:Options,
+  options: {
+    collection:null,
+    label:null,
+    selected:null
+  }
+  initialize: function(select,options) {
     var _this = this;
+    this.select = select;
     // Initialize all Select with a attribute class that content "load-data"
     $$('select.load-data').each(function(select) {
       // Define a collection, could be a SQL's table
@@ -14,6 +25,13 @@ cowboy.SelectLoadData = new Class({
       // Call getData method to retrieve data
       _this._getData(select,collection,label);
     });
+  }
+  , _setOptions: function(options) {
+    this.setOptions(options);
+    // Define
+    if(this.select.getProperty('data-')) {
+      this.select.getProperty
+    }
   }
   // Retrieve the collection of data by an Ajax Method 
   , _getData: function(select,collection,label) {
