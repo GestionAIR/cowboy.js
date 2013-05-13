@@ -56,7 +56,7 @@ cowboy.InputFile = new Class({
 	, _check: function() {
 		var _this = this;
 		// with FileAPI
-		if(window.File && window.FileReader && window.Blob) { 
+		if(window.File && window.Blob) { 
 			var file = this.input.files[0];
 			// Check Type
 			if((this.options.requiredType==null || file.type==this.options.requiredType)
