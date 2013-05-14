@@ -29,7 +29,7 @@ cowboy.InputFile = new Class({
 		this.input.inject(inputFile);
 		// Create the fake input file
 		var fakeInputFileContener = new Element('div',{"Class":"fakeinputfile"});
-		this.fakeInputFile = new Element('input',{"type":"text"});
+		this.fakeInputFile = new Element('input',{"type":"text","readonly":"readonly"});
 		var icon = new Element('span',{"Class":"directory"});
 		fakeInputFileContener.inject(inputFile);
 		this.fakeInputFile.inject(fakeInputFileContener);
@@ -37,6 +37,13 @@ cowboy.InputFile = new Class({
 
 		// Add Event to control the value
 		this.input.addEvent('change', _this._check.bind(_this));
+		// Add Events on fake input and icon to focus the input
+    	this.fakeInputFile.addEvent('focus',function(e){ 
+    		e.stop(); 
+    		_this.input.focus(); 
+    		_this.input.click();
+    	});
+    	icon.addEvent('click',function(){_this.input.click();});
 	}
 	, _setOptions: function(options) {
 		this.setOptions(options);
