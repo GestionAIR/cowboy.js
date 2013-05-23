@@ -42,6 +42,7 @@ cowboy.InputFile = new Class({
     		e.stop(); 
     		_this.input.focus(); 
     		_this.input.click();
+    		$$('html')[0].focus();
     	});
     	icon.addEvent('click',function(){_this.input.click();});
 	}
