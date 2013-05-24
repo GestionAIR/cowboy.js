@@ -4,6 +4,7 @@
  *
  * TODO : Support list of requiredType
  *        Support Multiple Files
+ *        Automaticaly put sizes in errors messages
  */
 cowboy.InputFile = new Class({
 	Implements: cowboy.Options,
@@ -79,7 +80,7 @@ cowboy.InputFile = new Class({
 				}
 			}
 		}
-		
+
 		// Fallback for old browsers
 		else if (this.value) this.fakeInputFile.value = e.value;
 	}
