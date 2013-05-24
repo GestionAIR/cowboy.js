@@ -12,7 +12,7 @@ cowboy.SelectLoadData = new Class({
     collection:null,
     label:null,
     selected:null
-  }
+  },
   initialize: function(select,options) {
     var _this = this;
     this.select = select;
