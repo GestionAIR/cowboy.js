@@ -2,7 +2,7 @@
 var cowboy = {};
 
 cowboy.Options = new Class({
-	Implements:Options,
+	Implements: Options,
 	setElementOptions: function(options, element, listProperties) {
 		listProperties.each(function(property) {
 			if(element.getProperty('data-' + property)) {
