@@ -6,7 +6,7 @@
  *        Support Multiple Files
  */
 cowboy.InputFile = new Class({
-	Implements:Options,
+	Implements:cowboy.Options,
 	options: {
 		minSize:4000,
 		minSizeMessage:"Votre fichier doit faire plus de 4 Ko",
@@ -18,9 +18,10 @@ cowboy.InputFile = new Class({
 	, initialize: function(input,options) {
 		var _this = this;
 		this.input = input;
+		this.options = Object.merge(this.options, options);
 
 		// Set Options and overload options by properties in the input element
-		this._setOptions(options);
+		this.setElementOptions(this.options, input, ['minSize', 'maxSize', 'requiredType']);
 
 		// ReBuild the Element
 		var inputFile = new Element('div',{"Class":"inputfile"});
@@ -45,21 +46,6 @@ cowboy.InputFile = new Class({
     		$$('html')[0].focus();
     	});
     	icon.addEvent('click',function(){_this.input.click();});
-	}
-	, _setOptions: function(options) {
-		this.setOptions(options);
-		// Define minimum size of the file
-		if(this.input.getProperty('data-minSize')) {
-			this.options.minSize = this.input.getProperty('data-minSize');
-		}
-		// Define maximum size of the file
-		if(this.input.getProperty('data-maxSize')) {
-			this.options.maxSize = this.input.getProperty('data-maxSize');
-		}
-		// Require file's type  
-		if(this.input.getProperty('data-requiredType')) {
-			this.options.requiredType = this.input.getProperty('data-requiredType');
-		}
 	}
 	, _check: function() {
 		var _this = this;
