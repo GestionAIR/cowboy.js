@@ -6,24 +6,22 @@
 cowboy.SelectLoadData = new Class({
   Implements:cowboy.Options,
   options: {
+    list:null,
     collection:null,
     label:null,
     selected:null,
     url:null,
-    method:'post'
+    method:"post"
   },
   initialize: function(select,options) {
     this.select = select;
+    // Overwrite options passed by JS (Merge or Append ???)
     this.options = Object.merge(this.options, options);
-
-    this.setElementOptions(this.options, this.select, ['collection','label','selected','url','method'])
+    // Overwrite options passed by Element's properties
+    this.setElementOptions(this.options, this.select)
     // Detect if the list is directly given in the options
-    if(this.options.list) {
-      this._pushData(this.options.list, this.select);
-    }
-    else {
-      this._getData();
-    }
+    if(this.options.list) this._pushData(this.options.list, this.select);
+    else this._getData();
   }
   // Retrieve the collection of data by an Ajax Method 
   , _getData: function() {

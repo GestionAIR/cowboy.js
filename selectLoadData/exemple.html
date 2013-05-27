@@ -11,7 +11,7 @@
       h1 {
         text-align: center;
       }
-      select { width:150px; margin:0 auto; display:block;}
+      select { width:200px; display:block; margin-bottom:10px;}
     </style>
   </head>
 
@@ -19,10 +19,15 @@
     <h1>Select Load Data</h1>
 
     <div>
-      <select id="selectLoadData" name="selectLoadData" class="load-data" data-collection="country" data-label="name" data-selected="FR" data-url="collection.php" data-method="post">
+      <label for="selectLoadData">Options passed by Element's properties</label>
+      <select id="selectLoadData" name="selectLoadData" data-collection="country" data-label="name" data-selected="FR" data-url="collection.php" data-method="post">
       </select>
+
+      <label for="selectLoadData-options">Options passed by JavaScript</label>
       <select name="selectLoadData-options" id="selectLoadData-options">
       </select>
+
+      <label for="selectLoadData-list">Collection passed by JavaScript</label>
       <select name="selectLoadData-list" id="selectLoadData-list">
       </select>
     </div>
