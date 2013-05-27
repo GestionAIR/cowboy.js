@@ -23,6 +23,8 @@
       </select>
       <select name="selectLoadData-options" id="selectLoadData-options">
       </select>
+      <select name="selectLoadData-list" id="selectLoadData-list">
+      </select>
     </div>
 
     <script src="../mootools/mootools-core.js"></script>
@@ -32,11 +34,14 @@
     <script type="text/javascript">
       window.addEvent('domready', function() {
         new cowboy.SelectLoadData($('selectLoadData'));
-        
+
         new cowboy.SelectLoadData($('selectLoadData-options'), {
           url:'collection.php',
           collection:'country',
           label:'name'
+        });
+        new cowboy.SelectLoadData($('selectLoadData-list'), {
+          list:[{id:"AF", label:"Afghanistan"}, {id:"AL", label:"Albania"}, {id:"DZ", label:"Algeria"}, {id:"AS", label:"American Samoa"}, {id:"AD", label:"Andorra"}, {id:"AO", label:"Angola"}, {id:"AI", label:"Anguilla"}, {id:"AQ", label:"Antarctica"}, {id:"AG", label:"Antigua and Barbuda"}, {id:"AR", label:"Argentina"}, {id:"AM", label:"Armenia"}, {id:"AW", label:"Aruba"}, {id:"AU", label:"Australia"}, {id:"AT", label:"Austria"}, {id:"AZ", label:"Azerbaijan"}, {id:"BS", label:"Bahamas"}, {id:"BH", label:"Bahrain"}, {id:"BD", label:"Bangladesh"}, {id:"BB", label:"Barbados"}, {id:"BY", label:"Belarus"}, {id:"BE", label:"Belgium"}, {id:"BZ", label:"Belize"}, {id:"BJ", label:"Benin"}, {id:"BM", label:"Bermuda"}, {id:"BT", label:"Bhutan"}, {id:"BO", label:"Bolivia"}, {id:"BA", label:"Bosnia and Herzegovina"}, {id:"BW", label:"Botswana"}, {id:"BV", label:"Bouvet Island"}, {id:"BR", label:"Brazil"}, {id:"IO", label:"British Indian Ocean Territory"}, {id:"BN", label:"Brunei Darussalam"}, {id:"BG", label:"Bulgaria"}, {id:"BF", label:"Burkina Faso"}]
         });
       });
     </script>

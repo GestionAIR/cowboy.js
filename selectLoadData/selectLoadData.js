@@ -1,9 +1,6 @@
 /* 
  * Class cowboy.SelectLoadData
  * Load data by an Ajax request into a Select Element
- *
- * TODO : Support List in parameters
- *          Detect if List is passed in parameters or not
  *          
  */
 cowboy.SelectLoadData = new Class({
@@ -21,7 +18,13 @@ cowboy.SelectLoadData = new Class({
     this.options = Object.merge(this.options, options);
 
     this.setElementOptions(this.options, this.select, ['collection','label','selected','url','method'])
-    this._getData();
+    // Detect if the list is directly given in the options
+    if(this.options.list) {
+      this._pushData(this.options.list, this.select);
+    }
+    else {
+      this._getData();
+    }
   }
   // Retrieve the collection of data by an Ajax Method 
   , _getData: function() {
