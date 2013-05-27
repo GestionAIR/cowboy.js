@@ -13,7 +13,6 @@ cowboy.SelectLoadData = new Class({
     method:'post'
   },
   initialize: function(select,options) {
-    var _this = this;
     this.select = select;
     this.options = Object.merge(this.options, options);
 

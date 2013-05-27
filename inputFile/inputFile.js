@@ -54,8 +54,6 @@ cowboy.InputFile = new Class({
     	icon.addEvent('click', function () { _this.input.click(); });
 	}
 	, _check: function() {
-		var _this = this;
-
 		// with FileAPI
 		if (window.File && window.Blob) { 
 			var file = this.input.files[0];
