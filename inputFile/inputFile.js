@@ -13,7 +13,7 @@ cowboy.InputFile = new Class({
 		maxSize: 5000000,
 		maxSizeMessage: "",
 		requiredType: null,
-		requiredTypeMessage: "",
+		requiredTypeMessage: "File type is not correct",
 	}
 	, initialize: function(input, options) {
 		var _this = this;
