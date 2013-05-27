@@ -10,9 +10,9 @@ cowboy.InputFile = new Class({
 	Implements: cowboy.Options,
 	options: {
 		minSize: 4000,
-		minSizeMessage: "Votre fichier doit faire plus de 4 Ko",
+		minSizeMessage: "",
 		maxSize: 5000000,
-		maxSizeMessage: "Votre fichier doit faire moins de 5 Mo",
+		maxSizeMessage: "",
 		requiredType: null,
 		requiredTypeMessage: "",
 	}
@@ -23,6 +23,9 @@ cowboy.InputFile = new Class({
 
 		// Set Options and overload options by properties in the input element
 		this.setElementOptions(this.options, input, ['minSize', 'maxSize', 'requiredType']);
+
+		this.options.minSizeMessage = "File size needs to be more than " + ((this.options.minSize > 1000000) ? String(Math.round(this.options.minSize / 1000000)) + "Mo" : String(this.options.minSize / 1000) + "Ko");
+		this.options.maxSizeMessage = "File size needs to be less than " + ((this.options.maxSize > 1000000) ? String(Math.round(this.options.maxSize / 1000000)) + "Mo" : String(this.options.maxSize / 1000) + "Ko");
 
 		// Rebuild the Element
 		var inputFile = new Element('div', {"Class": "inputfile"});
