@@ -4,8 +4,8 @@
 // ex : SELECT id,".$_POST['label']." label FROM ".$_POST['collection']." ORDER BY ".$_POST['label']."
 
 // Some country for the exemple.
-if(isset($_POST['collection']) && isset($_POST['label']) && isset($_POST['value'])) {
-	if($_POST['collection']=='country' && $_POST['label']=='name') {
+if (isset($_POST['collection']) && isset($_POST['label']) && isset($_POST['value'])) {
+	if ($_POST['collection'] == 'country' && $_POST['label'] == 'name') {
 
 		$valueTest = $_POST['value'];
 		$valueLength = strlen($valueTest);
@@ -255,9 +255,9 @@ if(isset($_POST['collection']) && isset($_POST['label']) && isset($_POST['value'
 		';
 
 		$collection = json_decode($collection);
-		$result = array("data"=>""); 
+		$result = array('data' => ''); 
 		foreach ($collection->data as $key => $value) {
-			if(substr($value->label,0,$valueLength)==$valueTest) {
+			if (substr($value->label, 0, $valueLength) == $valueTest) {
 				$result['data'][] = $value;
 			}
 		}

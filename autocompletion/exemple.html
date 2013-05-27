@@ -24,11 +24,11 @@
 		<h1>Autocompletion</h1>
 
 		<div>
-			<label for="test">Simple test : </label><br>
+			<label for="test">Simple test:</label><br>
 			<input id="test" name="test" data-collection="country" data-label="name" />
 			<br>
 			<br>
-			<label for="test-options">Test with options in input : </label><br>
+			<label for="test-options">Test with options in input:</label><br>
 			<input id="test-options" name="test-options" data-collection="country" data-label="name" data-minChar="1" data-maxResult="6" data-url="collection.php" />
 		</div>
 
@@ -38,7 +38,7 @@
 		<script src="autocompletion.js"></script>
 		<script type="text/javascript">
 			window.addEvent('domready', function() {
-				new cowboy.AutoCompletion($('test'),{'minChar':1,'maxResult':5,'url':'collection.php'});
+				new cowboy.AutoCompletion($('test'), {'minChar':1, 'maxResult':5, 'url':'collection.php'});
 				new cowboy.AutoCompletion($('test-options'));
 			});
 		</script>
