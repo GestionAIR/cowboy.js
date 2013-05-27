@@ -7,52 +7,42 @@
  *          
  */
 cowboy.SelectLoadData = new Class({
-  Implements:Options,
+  Implements:cowboy.Options,
   options: {
     collection:null,
     label:null,
-    selected:null
+    selected:null,
+    url:null,
+    method:'post'
   },
   initialize: function(select,options) {
     var _this = this;
     this.select = select;
-    // Initialize all Select with a attribute class that content "load-data"
-    $$('select.load-data').each(function(select) {
-      // Define a collection, could be a SQL's table
-      var collection = select.getProperty('data-collection'); 
-      // Define a property of the collection to be display in the select, could be a SQL's column
-      var label = select.getProperty('data-label');
-      // Call getData method to retrieve data
-      _this._getData(select,collection,label);
-    });
-  }
-  , _setOptions: function(options) {
-    this.setOptions(options);
-    // Define
-    if(this.select.getProperty('data-')) {
-      this.select.getProperty
-    }
+    this.options = Object.merge(this.options, options);
+
+    this.setElementOptions(this.options, this.select, ['collection','label','selected','url','method'])
+    this._getData();
   }
   // Retrieve the collection of data by an Ajax Method 
-  , _getData: function(select,collection,label) {
+  , _getData: function() {
     var _this = this;
     new Request({
-      url: 'collection.php',
-      method:'post',
+      url: this.options.url,
+      method: this.options.method,
       data:{
-        "collection":collection,
-        "label":label
+        "collection": this.options.collection,
+        "label": this.options.label
       },
       onSuccess: function(response){
         response = JSON.decode(response);
-        _this._pushData(response.data,select);
+        _this._pushData(response.data,_this.select);
       }
     }).send();
   }
   // Create all options into the select element
   , _pushData: function(list,select) {
     // Option : you can choose an option of the list to be selected by default
-    var selectedValue = select.getProperty('data-selected');
+    var selectedValue = this.options.selected;
     // For each element of the list 
     list.each(function(el) {
       var option = new Element('option',{

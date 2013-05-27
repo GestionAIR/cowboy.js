@@ -19,8 +19,10 @@
     <h1>Select Load Data</h1>
 
     <div>
-      <select id="cowboy" name="cowboy" class="load-data" data-collection="country" data-label="name" data-selected="FR">
-      </select>      
+      <select id="selectLoadData" name="selectLoadData" class="load-data" data-collection="country" data-label="name" data-selected="FR" data-url="collection.php" data-method="post">
+      </select>
+      <select name="selectLoadData-options" id="selectLoadData-options">
+      </select>
     </div>
 
     <script src="../mootools/mootools-core.js"></script>
@@ -29,7 +31,13 @@
     <script src="selectLoadData.js"></script>
     <script type="text/javascript">
       window.addEvent('domready', function() {
-        new cowboy.SelectLoadData();
+        new cowboy.SelectLoadData($('selectLoadData'));
+        
+        new cowboy.SelectLoadData($('selectLoadData-options'), {
+          url:'collection.php',
+          collection:'country',
+          label:'name'
+        });
       });
     </script>
   </body>
