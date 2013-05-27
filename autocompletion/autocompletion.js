@@ -184,6 +184,9 @@ cowboy.AutoCompletion = new Class({
 	}
 });
 
+/*
+DRAFT
+
 var getData = function(value, callback) {
 	var _this = this;
 	new Request({
@@ -194,9 +197,9 @@ var getData = function(value, callback) {
 			label: _this.options.label,
 			value: value
 		},
-		/*onRequest: function() {
-			console.log('Sending search...');
-		},*/
+		onRequest: function() {
+			//console.log('Sending search...');
+		},
 		onSuccess: function(response) {
 			response = JSON.decode(response);
 			callback();
@@ -207,3 +210,4 @@ var getData = function(value, callback) {
 function callback() {
 	console.log('truc');
 }
+*/
