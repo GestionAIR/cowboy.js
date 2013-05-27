@@ -2,8 +2,7 @@
  * Class cowboy.InputFile
  * Make an input[type=file] 
  *
- * TODO : Support list of requiredType
- *        Support Multiple Files
+ * TODO : Support Multiple Files
  *        Automaticaly put sizes in errors messages
  */
 cowboy.InputFile = new Class({
@@ -62,14 +61,14 @@ cowboy.InputFile = new Class({
 			var file = this.input.files[0];
 
 			// Check Type
-			if ((this.options.requiredType == null || file.type == this.options.requiredType)
+			if ((this.options.requiredType == null || file.type == this.options.requiredType || this.options.requiredType.contains(file.type))
 				 && file.size >= this.options.minSize && file.size <= this.options.maxSize) {
 				this.fakeInputFile.value = file.name; // Show filename
 				this.fakeInputFile.removeClass('log-error').addClass('log-validated');
 			}
 			// Show Warnings
 			else {
-				if (this.options.requiredType != null && file.type != this.options.requiredType) {
+				if (this.options.requiredType != null && file.type != this.options.requiredType || !this.options.requiredType.contains(file.type)) {
 					this.fakeInputFile.value = this.options.requiredTypeMessage;
 					this.fakeInputFile.removeClass('log-validated').addClass('log-error');
 				}
