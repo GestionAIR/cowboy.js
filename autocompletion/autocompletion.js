@@ -11,18 +11,23 @@
             - Rien == getData interne
  */
 cowboy.AutoCompletion = new Class({
-  initialize: function(input,option) {
+  Implements: cowboy.Options,
+  options: {
+    minChar: 1,
+    maxResult: 5,
+    collection: null,
+    label: null,
+    url: null,
+    method: 'post'
+  },
+  initialize: function(input,options) {
     var _this = this;
     this.input = input;
-    // Number of char to start the search
-    this.minChar = option.minChar || 1;
-    // Maximum number of result to display 
-    this.maxResult = option.maxResult || 5;
-    this.select = $(_this.input.id+'_select_list') || null;
-    // The collection of data (ex : name of a table from a database)
-    this.collection = input.getProperty('data-collection');
-    // The property (ex : name of a column from the table selected)
-    this.label = input.getProperty('data-label');
+    this.options = Object.merge(this.options, options);
+
+    this.setElementOptions(this.options, this.input, ['collection','label','url','method', 'minChar', 'maxChar']);
+
+    this.select = $(this.input.id+'_select_list') || null;
 
     // If the list to display the result doesn't exist 
     if(!this.select) {
@@ -31,23 +36,23 @@ cowboy.AutoCompletion = new Class({
         'class':'input-select'
       });
       this.select.addClass('hidden').addClass('input-select');
-      this.select.inject(_this.input,'after');
+      this.select.inject(this.input,'after');
     }
     // Initialize all Events on input
     // Close results on "virtual" blur of input
-    window.addEvent('click', _this._closeResult.bind(_this)); 
+    window.addEvent('click', this._closeResult.bind(this)); 
     // Get data after a small delay
-    this.input.addEvent('keydown:pause(150)', _this._getData.bind(_this)); 
+    this.input.addEvent('keydown:pause(150)', this._getData.bind(this)); 
     // Enter event to validate the tag & prevent default submit()
-    this.input.addEvent('keydown:keys(enter)', _this._pushSelectedResult.bind(_this));
+    this.input.addEvent('keydown:keys(enter)', this._pushSelectedResult.bind(this));
     // Close results and focus the next input
-    this.input.addEvent('keydown:keys(tab)', _this._closeResult.bind(_this));
+    this.input.addEvent('keydown:keys(tab)', this._closeResult.bind(this));
     // Navigation down direction
-    this.input.addEvent('keydown:keys(down)', _this._navigate.bind(_this)); 
+    this.input.addEvent('keydown:keys(down)', this._navigate.bind(this)); 
     // Navigation up direction
-    this.input.addEvent('keydown:keys(up)', _this._navigate.bind(_this));
+    this.input.addEvent('keydown:keys(up)', this._navigate.bind(this));
     // Close results
-    this.input.addEvent('keydown:keys(esc)', _this._closeResult.bind(_this));
+    this.input.addEvent('keydown:keys(esc)', this._closeResult.bind(this));
     // Add Class on mouseenter a result
     this.select.addEvent('mouseenter:relay(li)', function(e) { 
       var li = e.target
@@ -64,26 +69,26 @@ cowboy.AutoCompletion = new Class({
       });
     });
     // Add click event on a result to be selected
-    this.select.addEvent('click:relay(li)', _this._selection.bind(_this));
+    this.select.addEvent('click:relay(li)', this._selection.bind(this));
   }
   , _getData: function(e) {
     var _this = this;
     this.select.setStyles({
-      top:_this.input.offsetTop+_this.input.offsetHeight+20,
-      left:_this.input.offsetLeft,
-      width:_this.input.offsetWidth-2
+      top: this.input.offsetTop+this.input.offsetHeight+20,
+      left: this.input.offsetLeft,
+      width: this.input.offsetWidth-2
     });
     // Check if the keydown is alpha and one char prevent action keydown (esc,enter,shift...)
     if(e.key.length==1 && /^[a-zA-Z0-9]$/.test(e.key)) {
       // If the value has the minimum Char (option)
-      if(this.input.value.length>=this.minChar) {
+      if(this.input.value.length>=this.options.minChar) {
         new Request({
-          url: 'collection.php',
-          method:'post',
+          url: this.options.url,
+          method: this.options.method,
           data: {
-            collection:_this.collection,
-            label:_this.label,
-            value:_this.input.value
+            collection: this.options.collection,
+            label: this.options.label,
+            value: this.input.value
           },
           onRequest: function() {
             // console.log('Sending search...');
@@ -94,7 +99,7 @@ cowboy.AutoCompletion = new Class({
               var html = '<ul>';
               response.data.each(function(el) {
                 var i=0;
-                if(_this.maxResult>i) {
+                if(_this.options.maxResult>i) {
                   html += '<li>'+el.label+'</li>';
                   i++;
                 }
@@ -110,16 +115,15 @@ cowboy.AutoCompletion = new Class({
         }).send();
       }
       else {
-        _this.select.addClass('hidden');
+        this.select.addClass('hidden');
       }
     }
   }
   // Navigate by keydown and keyup into results
   , _navigate: function(e) {
     e.stop();
-    var _this = this;
     if(e.key=="down") {
-      var active = _this.select.getElement('.active');
+      var active = this.select.getElement('.active');
       // check if an result is already selected
       if(active) {
         if(active.getNext('li')) {
@@ -128,16 +132,16 @@ cowboy.AutoCompletion = new Class({
         }
         else {
           active.removeClass('active');
-          _this.select.getFirst('ul li').addClass('active');
+          this.select.getFirst('ul li').addClass('active');
         }
       }
       // push an active on first Element of the list
       else { 
-        _this.select.getFirst('ul li').addClass('active');
+        this.select.getFirst('ul li').addClass('active');
       }
     }
     if(e.key=="up") {
-      var active = _this.select.getElement('.active');
+      var active = this.select.getElement('.active');
       if(active) {
         if(active.getPrevious('li')) {
           active.removeClass('active');
@@ -145,37 +149,34 @@ cowboy.AutoCompletion = new Class({
         }
         else {
           active.removeClass('active');
-          _this.select.getLast('ul li').addClass('active');
+          this.select.getLast('ul li').addClass('active');
         }
       }
       else {
-        _this.select.getLast('ul li').addClass('active');
+        this.select.getLast('ul li').addClass('active');
       }
     }
   }
   // Selection a result
   , _selection: function(e) { 
-    var _this = this;
     var inputSelected = e.target.get('text');
-    _this.input.value = inputSelected;
-    _this.input.focus();
-    _this.select.addClass('hidden');
-    _this._pushSelectedResult(e);
+    this.input.value = inputSelected;
+    this.input.focus();
+    this.select.addClass('hidden');
+    this._pushSelectedResult(e);
   }
   // Close result
   , _closeResult: function(e) {
-    var _this = this;    
-    var active = _this.select.getElement('.active');
+    var active = this.select.getElement('.active');
     if(active) { active.removeClass('active'); }
-    _this.select.addClass('hidden');
+    this.select.addClass('hidden');
   }
   , _pushSelectedResult: function(e) {
     e.stop();
-    var _this = this;
-    if(_this.input.value != "") {
-      var active = _this.select.getElement('.active');
-      if(active) { _this.input.value = active.get('text'); active.removeClass('active'); } // A result selected we push it 
-      _this.select.empty().addClass('hidden');
+    if(this.input.value != "") {
+      var active = this.select.getElement('.active');
+      if(active) { this.input.value = active.get('text'); active.removeClass('active'); } // A result selected we push it 
+      this.select.empty().addClass('hidden');
     }
   }
 });
@@ -186,8 +187,8 @@ var getData = function(value,callback) {
     url: 'collection.php',
     method:'post',
     data: {
-      collection:_this.collection,
-      label:_this.label,
+      collection:_this.options.collection,
+      label:_this.options.label,
       value:value
     },
     onRequest: function() {
