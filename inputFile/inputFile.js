@@ -21,7 +21,7 @@ cowboy.InputFile = new Class({
 		this.options = Object.merge(this.options, options);
 
 		// Set Options and overload options by properties in the input element
-		this.setElementOptions(this.options, input, ['minSize', 'maxSize', 'requiredType']);
+		this.setElementOptions(this.options, input);
 
 		this.options.minSizeMessage = "File size needs to be more than " + ((this.options.minSize > 1000000) ? String(Math.round(this.options.minSize / 1000000)) + "Mo" : String(this.options.minSize / 1000) + "Ko");
 		this.options.maxSizeMessage = "File size needs to be less than " + ((this.options.maxSize > 1000000) ? String(Math.round(this.options.maxSize / 1000000)) + "Mo" : String(this.options.maxSize / 1000) + "Ko");

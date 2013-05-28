@@ -25,7 +25,7 @@ cowboy.AutoCompletion = new Class({
 		this.input = input;
 		this.options = Object.merge(this.options, options);
 
-		this.setElementOptions(this.options, this.input, ['collection', 'label', 'url', 'method', 'minChar', 'maxChar']);
+		this.setElementOptions(this.options, this.input);
 
 		this.select = $(this.input.id + '_select_list') || null;
 
