@@ -8,7 +8,7 @@ if(isset($_POST['collection']) && isset($_POST['label'])) {
   if($_POST['collection']=='country' && $_POST['label']=='name') {
 
     echo '
-    {"data":[
+    {"' . $_POST["collection"] . '":[
       {"id":"AF","label":"Afghanistan"},
       {"id":"AL","label":"Albania"},
       {"id":"DZ","label":"Algeria"},
