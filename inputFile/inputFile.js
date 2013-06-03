@@ -9,9 +9,9 @@ cowboy.InputFile = new Class({
 	Implements: cowboy.Options,
 	options: {
 		minSize: 4000,
-		minSizeMessage: "",
+		minSizeMessage: "File size needs to be more than %d%",
 		maxSize: 5000000,
-		maxSizeMessage: "",
+		maxSizeMessage: "File size needs to be less than %d%",
 		requiredType: null,
 		requiredTypeMessage: "File type is not correct",
 	}
@@ -23,8 +23,11 @@ cowboy.InputFile = new Class({
 		// Set Options and overload options by properties in the input element
 		this.setElementOptions(this.options, input);
 
-		this.options.minSizeMessage = "File size needs to be more than " + ((this.options.minSize > 1000000) ? String(Math.round(this.options.minSize / 1000000)) + "Mo" : String(Math.round(this.options.minSize / 1000)) + "Ko");
-		this.options.maxSizeMessage = "File size needs to be less than " + ((this.options.maxSize > 1000000) ? String(Math.round(this.options.maxSize / 1000000)) + "Mo" : String(Math.round(this.options.maxSize / 1000)) + "Ko");
+		// Set filesize error messages
+		var minSizeStr = ((this.options.minSize > 1000000) ? String(Math.round(this.options.minSize / 1000000)) + "Mo" : String(Math.round(this.options.minSize / 1000)) + "Ko");
+		var maxSizeStr = ((this.options.maxSize > 1000000) ? String(Math.round(this.options.maxSize / 1000000)) + "Mo" : String(Math.round(this.options.maxSize / 1000)) + "Ko");
+		this.options.minSizeMessage = this.options.minSizeMessage.replace('%d%', minSizeStr);
+		this.options.maxSizeMessage = this.options.maxSizeMessage.replace('%d%', maxSizeStr);
 
 		// Rebuild the Element
 		var inputFile = new Element('div', {"Class": "inputfile"});
