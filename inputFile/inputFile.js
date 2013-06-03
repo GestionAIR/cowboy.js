@@ -23,8 +23,8 @@ cowboy.InputFile = new Class({
 		// Set Options and overload options by properties in the input element
 		this.setElementOptions(this.options, input);
 
-		this.options.minSizeMessage = "File size needs to be more than " + ((this.options.minSize > 1000000) ? String(Math.round(this.options.minSize / 1000000)) + "Mo" : String(this.options.minSize / 1000) + "Ko");
-		this.options.maxSizeMessage = "File size needs to be less than " + ((this.options.maxSize > 1000000) ? String(Math.round(this.options.maxSize / 1000000)) + "Mo" : String(this.options.maxSize / 1000) + "Ko");
+		this.options.minSizeMessage = "File size needs to be more than " + ((this.options.minSize > 1000000) ? String(Math.round(this.options.minSize / 1000000)) + "Mo" : String(Math.round(this.options.minSize / 1000)) + "Ko");
+		this.options.maxSizeMessage = "File size needs to be less than " + ((this.options.maxSize > 1000000) ? String(Math.round(this.options.maxSize / 1000000)) + "Mo" : String(Math.round(this.options.maxSize / 1000)) + "Ko");
 
 		// Rebuild the Element
 		var inputFile = new Element('div', {"Class": "inputfile"});
@@ -66,7 +66,7 @@ cowboy.InputFile = new Class({
 			}
 			// Show Warnings
 			else {
-				if (this.options.requiredType != null && file.type != this.options.requiredType || !this.options.requiredType.contains(file.type)) {
+				if (this.options.requiredType != null && (file.type != this.options.requiredType || !this.options.requiredType.contains(file.type))) {
 					this.fakeInputFile.value = this.options.requiredTypeMessage;
 					this.fakeInputFile.removeClass('log-validated').addClass('log-error');
 				}
