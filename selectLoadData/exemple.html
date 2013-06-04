@@ -1,55 +1,55 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>cowboy.js</title>
-    <style type="text/css">
-      body {
-        margin: 0 auto 0 auto;
-        width: 800px;
-      }
-      h1 {
-        text-align: center;
-      }
-      select { width: 200px; display: block; margin-bottom: 10px; }
-    </style>
-  </head>
+	<head>
+		<meta charset="utf-8" />
+		<title>cowboy.js</title>
+		<style type="text/css">
+			body {
+				margin: 0 auto 0 auto;
+				width: 800px;
+			}
+			h1 {
+				text-align: center;
+			}
+			select { width: 200px; display: block; margin-bottom: 10px; }
+		</style>
+	</head>
 
-  <body>
-    <h1>Select Load Data</h1>
+	<body>
+		<h1>Select Load Data</h1>
 
-    <div>
-      <label for="selectLoadData">Options passed by Element's properties</label>
-      <select id="selectLoadData" name="selectLoadData" data-collection="country" data-label="name" data-selected="FR" data-url="collection.php" data-method="post">
-      </select>
+		<div>
+			<label for="selectLoadData">Options passed by Element's properties</label>
+			<select id="selectLoadData" name="selectLoadData" data-collection="country" data-label="name" data-selected="FR" data-url="collection.php" data-method="post">
+			</select>
 
-      <label for="selectLoadData-options">Options passed by JavaScript</label>
-      <select name="selectLoadData-options" id="selectLoadData-options">
-      </select>
+			<label for="selectLoadData-options">Options passed by JavaScript</label>
+			<select name="selectLoadData-options" id="selectLoadData-options">
+			</select>
 
-      <label for="selectLoadData-list">Collection passed by JavaScript</label>
-      <select name="selectLoadData-list" id="selectLoadData-list">
-      </select>
-    </div>
+			<label for="selectLoadData-list">Collection passed by JavaScript</label>
+			<select name="selectLoadData-list" id="selectLoadData-list">
+			</select>
+		</div>
 
-    <script src="../mootools/mootools-core.js"></script>
-    <script src="../mootools/mootools-more.js"></script>
-    <script src="../cowboy.js"></script>
-    <script src="selectLoadData.js"></script>
-    <script type="text/javascript">
-      window.addEvent('domready', function() {
-        new cowboy.SelectLoadData($('selectLoadData'));
+		<script src="../mootools/mootools-core.js"></script>
+		<script src="../mootools/mootools-more.js"></script>
+		<script src="../cowboy.js"></script>
+		<script src="selectLoadData.js"></script>
+		<script type="text/javascript">
+			window.addEvent('domready', function() {
+				new cowboy.SelectLoadData($('selectLoadData'));
 
-        new cowboy.SelectLoadData($('selectLoadData-options'), {
-          url: 'collection.php',
-          collection: 'country',
-          label: 'name'
-        });
+				new cowboy.SelectLoadData($('selectLoadData-options'), {
+					url: 'collection.php',
+					collection: 'country',
+					label: 'name'
+				});
 
-        new cowboy.SelectLoadData($('selectLoadData-list'), {
-          list:[{id:"AF", label:"Afghanistan"}, {id:"AL", label:"Albania"}, {id:"DZ", label:"Algeria"}, {id:"AS", label:"American Samoa"}, {id:"AD", label:"Andorra"}, {id:"AO", label:"Angola"}, {id:"AI", label:"Anguilla"}, {id:"AQ", label:"Antarctica"}, {id:"AG", label:"Antigua and Barbuda"}, {id:"AR", label:"Argentina"}, {id:"AM", label:"Armenia"}, {id:"AW", label:"Aruba"}, {id:"AU", label:"Australia"}, {id:"AT", label:"Austria"}, {id:"AZ", label:"Azerbaijan"}, {id:"BS", label:"Bahamas"}, {id:"BH", label:"Bahrain"}, {id:"BD", label:"Bangladesh"}, {id:"BB", label:"Barbados"}, {id:"BY", label:"Belarus"}, {id:"BE", label:"Belgium"}, {id:"BZ", label:"Belize"}, {id:"BJ", label:"Benin"}, {id:"BM", label:"Bermuda"}, {id:"BT", label:"Bhutan"}, {id:"BO", label:"Bolivia"}, {id:"BA", label:"Bosnia and Herzegovina"}, {id:"BW", label:"Botswana"}, {id:"BV", label:"Bouvet Island"}, {id:"BR", label:"Brazil"}, {id:"IO", label:"British Indian Ocean Territory"}, {id:"BN", label:"Brunei Darussalam"}, {id:"BG", label:"Bulgaria"}, {id:"BF", label:"Burkina Faso"}]
-        });
-      });
-    </script>
-  </body>
+				new cowboy.SelectLoadData($('selectLoadData-list'), {
+					list:[{id:"AF", label:"Afghanistan"}, {id:"AL", label:"Albania"}, {id:"DZ", label:"Algeria"}, {id:"AS", label:"American Samoa"}, {id:"AD", label:"Andorra"}, {id:"AO", label:"Angola"}, {id:"AI", label:"Anguilla"}, {id:"AQ", label:"Antarctica"}, {id:"AG", label:"Antigua and Barbuda"}, {id:"AR", label:"Argentina"}, {id:"AM", label:"Armenia"}, {id:"AW", label:"Aruba"}, {id:"AU", label:"Australia"}, {id:"AT", label:"Austria"}, {id:"AZ", label:"Azerbaijan"}, {id:"BS", label:"Bahamas"}, {id:"BH", label:"Bahrain"}, {id:"BD", label:"Bangladesh"}, {id:"BB", label:"Barbados"}, {id:"BY", label:"Belarus"}, {id:"BE", label:"Belgium"}, {id:"BZ", label:"Belize"}, {id:"BJ", label:"Benin"}, {id:"BM", label:"Bermuda"}, {id:"BT", label:"Bhutan"}, {id:"BO", label:"Bolivia"}, {id:"BA", label:"Bosnia and Herzegovina"}, {id:"BW", label:"Botswana"}, {id:"BV", label:"Bouvet Island"}, {id:"BR", label:"Brazil"}, {id:"IO", label:"British Indian Ocean Territory"}, {id:"BN", label:"Brunei Darussalam"}, {id:"BG", label:"Bulgaria"}, {id:"BF", label:"Burkina Faso"}]
+				});
+			});
+		</script>
+	</body>
 </html>
