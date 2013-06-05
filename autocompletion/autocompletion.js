@@ -97,13 +97,11 @@ cowboy.AutoCompletion = new Class({
 						response = JSON.decode(response);
 						if (response.data.length > 0) {
 							var html = '<ul>';
-							response.data.each(function(el) {
-								var i = 0;
-								if (_this.options.maxResult > i) {
-									html += '<li>' + el.label + '</li>';
-									i++;
-								}
-							});
+							var i = 0;
+							while(i < _this.options.maxResult) {
+								html += '<li>' + response.data[i].label + '</li>';
+								i++;
+							}
 							html += '</ul>';
 							_this.select.set('html', html);
 							_this.select.removeClass('hidden');
