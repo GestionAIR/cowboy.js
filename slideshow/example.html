@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>cowboy.js</title>
+	<style type="text/css">
+		body {
+			margin: 0 auto 0 auto;
+			width: 800px;
+		}
+		h1 {
+			text-align: center;
+		}
+		#slideshow-auto { height: 380px; width: 640px; margin: 0 auto; overflow: hidden; position: relative; }
+		.container { height: 360px; position: absolute; }
+
+		.slide { width: 640px; float: left; height: 360px; }
+		.slide img { margin: auto auto; max-width: 640px; max-height: 360px; float: left; }
+
+		.controls {position: relative; top: 185px; z-index: 1000; }
+		.control-left, .control-right { width: 0; height: 0; border-top: 15px solid transparent; border-bottom: 15px solid transparent; opacity: 0.5; }
+		.control-left { border-right: 15px solid #cacaca; float: left; margin-left: 15px; }
+		.control-right { border-left: 15px solid #cacaca; float: right; margin-right: 15px; }
+
+		.selector { position: absolute; bottom: 0; width: 640px; }
+		.selector a { margin: 5px 3px; width: 8px; height: 8px; background-color: #666666; display: block; float: left; border-radius: 5px; border: 1px solid #000000; }
+		.selector a.active { background-color: #000000; }
+	</style>
+</head>
+
+<body>
+	<h1>Slideshow</h1>
+
+	<div id="slideshow-auto">
+		<div class="controls">
+			<div class="control-left"></div>
+			<div class="control-right"></div>
+		</div>
+		<div class="container">
+			<div class="slide">
+				<img src="img-1.jpg" alt="">
+			</div>
+			<div class="slide">
+				<img src="img-2.jpg" alt="">
+			</div>
+			<div class="slide">
+				<img src="img-3.jpg" alt="">
+			</div>
+		</div>
+		<div class="selector">
+			<a href="#"></a>
+		</div>
+	</div>
+
+	<script src="../mootools/mootools-core.js"></script>
+	<script src="../mootools/mootools-more.js"></script>
+	<script src="../cowboy.js"></script>
+	<script src="slideShow.js"></script>
+	<script type="text/javascript">
+		window.addEvent('domready', function() {
+			new cowboy.SlideShow($('slideshow-auto'), {});
+		});
+	</script>
+</body>
+</html>
