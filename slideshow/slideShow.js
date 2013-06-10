@@ -11,7 +11,7 @@ cowboy.SlideShow = new Class({
 		loop: true,
 		slideOnClick: true,
 		transition: 'Circ.easeInOut',
-		allowKeyboardArrows: true
+		allowKeyboardArrows: true,
 	},
 
 	initialize: function(element, options) {
@@ -49,7 +49,7 @@ cowboy.SlideShow = new Class({
 
 		this.slideWidth = this.slideShow.getWidth();
 		this.container.setStyle('width', this.slideWidth * this.nbSlides);
-		this.container.setStyle('margin-left', -(this.actualSlide -1) * this.slideWidth);
+		this.container.setStyle('margin-left', -(this.actualSlide - 1) * this.slideWidth);
 	},
 
 	/**
@@ -57,7 +57,7 @@ cowboy.SlideShow = new Class({
 	 */
 	_setPeriodical: function() {
 		var fx = function() {
-			_this._slide(_this.options.defaultDirection)
+			_this._slide(_this.options.defaultDirection);
 		};
 
 		this.periodicalAnim = fx.periodical(this.options.periodical);
@@ -98,7 +98,7 @@ cowboy.SlideShow = new Class({
 	_goTo: function(number) {
 		this.actualSlide = number;
 
-		var marginLeft = -(this.actualSlide -1) * this.slideWidth;
+		var marginLeft = -(this.actualSlide - 1) * this.slideWidth;
 		this.container.set('tween', {transition: window['Fx.Transitions.' + this.options.transition]});
 		this.container.tween('margin-left', marginLeft);
 
@@ -179,7 +179,9 @@ cowboy.SlideShow = new Class({
 		}
 		else {
 			this.options.autoSlide = true;
-			var fx = function() { _this._slide(_this.options.defaultDirection); };
+			var fx = function() {
+				_this._slide(_this.options.defaultDirection);
+			};
 			this.periodicalAnim = fx.periodical(this.options.periodical);
 		}
 	}
