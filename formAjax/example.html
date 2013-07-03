@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>FormAjax</title>
+</head>
+<body>
+	<h1>FormAjax demonstration</h1>
+
+	<form action="test.php" id="contactForm">
+		<label for="name">Name: </label><input type="text" name="name" id="name" class="required"><br>
+		<label for="surname">Surname: </label><input type="text" name="surname" id="surname" class="required"><br>
+		<label for="age">Age: </label><input type="number" name="age" id="age" class="required"><br>
+		<label for="email">Email: </label><input type="email" name="email" id="email"><br>
+		<input type="submit" value="Submit">
+	</form>
+
+	
+	<p id="output"></p>
+
+	<script src="../mootools/mootools-core.js"></script>
+	<script src="../mootools/mootools-more.js"></script>
+	<script src="../cowboy.js"></script>
+	<script src="formAjax.js"></script>
+	<script>
+
+		var success = function(data) {
+			if (data.status == 'success') {
+				var html = 'Name: ' + data['name'] + '<br> Surname: ' + data['surname'] + '<br> Age: ' + data['age'];
+				if (data['email']) {
+					html += '<br>Email: ' + data['email'];
+				}
+				document.getElement('#output').set('html', html);
+			}
+			else if (data.status == 'failed') {
+				document.getElement('#output').set('html', data.message);
+			}
+		};
+
+		var loading = function() {
+			console.log('loading');
+		};
+
+		window.addEvent('domready', function() {
+			new cowboy.FormAjax(document.getElement('#contactForm'), {onSuccess: 'success', onRequest: 'loading'});
+		});
+	</script>
+</body>
+</html>
