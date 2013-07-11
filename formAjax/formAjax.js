@@ -1,3 +1,6 @@
+/**
+ * AJAX form creation
+ */
 cowboy.FormAjax = new Class ({
 	Implements: cowboy.Options,
 
@@ -10,6 +13,12 @@ cowboy.FormAjax = new Class ({
 		redirect: null
 	},
 
+	/**
+	 * Create a FormAjax
+	 * @param  {Element}	form		Form element
+	 * @param  {Object}		options		Form options
+	 * @param  {Function}	callback	Callback
+	 */
 	initialize: function(form, options, callback) {
 		this.form = form;
 
@@ -19,47 +28,62 @@ cowboy.FormAjax = new Class ({
 		this.setElementOptions(this.options, form);
 
 		this.form.setProperty('autocomplete', 'off');
-		this.form.addEvent('submit', this._submit.bind(this));
+		this.form.addEvent('submit', this.submit.bind(this));
 
 		var _this = this;
 
 		this.form.getElements('.required').each(function(el){
-			el.addEvent('focus', _this._focus);
-			el.addEvent('blur', _this._blur.bind(_this));
+			el.addEvent('focus', _this.focus);
+			el.addEvent('blur', _this.blur.bind(_this));
 		});
 
 		if (typeof callback == 'function') this.callback = callback;
 		else this.callback = null;
 	},
 
-	_submit: function(e) {
+	/**
+	 * Submit the form
+	 * @param  {Event}	e	Event that triggers the submit
+	 */
+	submit: function(e) {
 		e.stop();
 
-		this._showErrors();
+		this.showErrors();
 
 		if (this.form.getElements('.error').length === 0) {
-			this.data = this._getFormData();
+			this.data = this.getFormData();
 			this.url = this.form.getProperty('action');
 
-			this._sendFormAjax();
+			this.sendFormAjax();
 		}
 	},
 
-	_focus: function(e){
+	/**
+	 * Event triggered on input focus
+	 * @param  {Event}	e	Event when an input is focused
+	 */
+	focus: function(e){
 		if(e.target.hasClass('error')) {
 			this.removeClass('error');
 			this.erase('placeholder');
 		}
 	},
 
-	_blur: function(e){
+	/**
+	 * Event triggered on input blur
+	 * @param  {Event}	e	Event when an input is blured
+	 */
+	blur: function(e){
 		if (e.target.value === '') {
 			e.target.setProperty('placeholder',this.options.invalidFieldMessage);
 			e.target.addClass('error');
 		}
 	},
 
-	_showErrors: function() {
+	/**
+	 * Show the form errors
+	 */
+	showErrors: function() {
 		_this = this;
 		this.form.getElements('.required').each(function(el) {
 			if (el.value === '') {
@@ -69,7 +93,11 @@ cowboy.FormAjax = new Class ({
 		});
 	},
 
-	_getFormData: function() {
+	/**
+	 * Get data to submit
+	 * @return	{Object}	Data
+	 */
+	getFormData: function() {
 		var data = {};
 
 		this.form.getElements('input[name]').each(function(el) {
@@ -102,7 +130,10 @@ cowboy.FormAjax = new Class ({
 		return data;
 	},
 
-	_sendFormAjax: function() {
+	/**
+	 * Send data in AJAX
+	 */
+	sendFormAjax: function() {
 		var _this = this;
 
 		new Request({
