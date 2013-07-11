@@ -36,7 +36,7 @@ cowboy.FormAjax = new Class ({
 
 		this._showErrors();
 
-		if (this.form.getElements('.error').length == 0) {
+		if (this.form.getElements('.error').length === 0) {
 			this.data = this._getFormData();
 			this.url = this.form.getProperty('action');
 
@@ -52,7 +52,7 @@ cowboy.FormAjax = new Class ({
 	},
 
 	_blur: function(e){
-		if(e.target.value=='') {
+		if (e.target.value === '') {
 			e.target.setProperty('placeholder',this.options.invalidFieldMessage);
 			e.target.addClass('error');
 		}
@@ -61,7 +61,7 @@ cowboy.FormAjax = new Class ({
 	_showErrors: function() {
 		_this = this;
 		this.form.getElements('.required').each(function(el) {
-			if (el.value == '') {
+			if (el.value === '') {
 				el.addClass('error');
 				el.setProperty('placeholder',_this.options.invalidFieldMessage);
 			}
@@ -73,7 +73,7 @@ cowboy.FormAjax = new Class ({
 
 		this.form.getElements('input[name]').each(function(el) {
 			if (el.getProperty('type') == 'checkbox') {
-				if (el.checked == true) {
+				if (el.checked === true) {
 					data[el.name] = el.value;
 				}
 				else {
@@ -81,7 +81,7 @@ cowboy.FormAjax = new Class ({
 				}
 			}
 			else if (el.getProperty('type') == 'radio') {
-					if (el.checked == true) {
+				if (el.checked === true) {
 					data[el.name] = el.value;
 				}
 			}
@@ -119,21 +119,21 @@ cowboy.FormAjax = new Class ({
 
 				_this.response = JSON.decode(response);
 
-				if (_this.options.onSuccess != null) {
+				if (_this.options.onSuccess !== null) {
 					eval(_this.options.onSuccess + '(' + response + ')');
 				}
 
-				if (_this.options.callback != null) {
+				if (_this.options.callback !== null) {
 					eval(_this.options.callback + '(' + response + ')');
 				}
 
-				if (_this.options.redirect != null && _this.options.redirect != 'stop') {
+				if (_this.options.redirect !== null && _this.options.redirect != 'stop') {
 					(function() { window.location = _this.options.redirect; }).delay(_this.options.redirectDelay);
 				}
 			},
 
 			onFailure: function() {
-				if (_this.options.onFailure != null) {
+				if (_this.options.onFailure !== null) {
 					eval(_this.options.onFailure + '()');
 				}
 			}
