@@ -111,7 +111,7 @@ cowboy.FormAjax = new Class ({
 
 			onRequest: function() {
 				if (_this.options.onRequest !== null) {
-					eval(_this.options.onRequest + '()');
+					window[_this.options.onRequest]();
 				}
 			},
 
@@ -120,11 +120,11 @@ cowboy.FormAjax = new Class ({
 				_this.response = JSON.decode(response);
 
 				if (_this.options.onSuccess !== null) {
-					eval(_this.options.onSuccess + '(' + response + ')');
+					window[_this.options.onSuccess](JSON.parse(response));
 				}
 
 				if (_this.options.callback !== null) {
-					eval(_this.options.callback + '(' + response + ')');
+					window[_this.options.callback](JSON.parse(response));
 				}
 
 				if (_this.options.redirect !== null && _this.options.redirect != 'stop') {
@@ -134,7 +134,7 @@ cowboy.FormAjax = new Class ({
 
 			onFailure: function() {
 				if (_this.options.onFailure !== null) {
-					eval(_this.options.onFailure + '()');
+					window[_this.options.onFailure](JSON.parse());
 				}
 			}
 		}).send();
