@@ -7,11 +7,10 @@ cowboy.FormAjax = new Class ({
 		onRequest: null,
 		onSuccess: null,
 		onFailure: null,
-		callback: null,
 		redirect: null
 	},
 
-	initialize: function(form, options) {
+	initialize: function(form, options, callback) {
 		this.form = form;
 
 		this.options = Object.merge(this.options, options);
@@ -29,6 +28,8 @@ cowboy.FormAjax = new Class ({
 			el.addEvent('blur', _this._blur.bind(_this));
 		});
 
+		if (typeof callback == 'function') this.callback = callback;
+		else this.callback = null;
 	},
 
 	_submit: function(e) {
@@ -123,8 +124,8 @@ cowboy.FormAjax = new Class ({
 					window[_this.options.onSuccess](JSON.parse(response));
 				}
 
-				if (_this.options.callback !== null) {
-					window[_this.options.callback](JSON.parse(response));
+				if (_this.callback) {
+					_this.callback(JSON.parse(response));
 				}
 
 				if (_this.options.redirect !== null && _this.options.redirect != 'stop') {
