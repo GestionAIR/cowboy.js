@@ -10,6 +10,11 @@ JS components built on top of [Mootools](http://mootools.net/) to make [GestionA
 - **LogBar** : displays a status bar in the bottom of the screen
 - **Toggles** : toggles visibility of an element
 - **Select Load Data** : auto loader data into a select element (usefull with an Ajax Transaction with data coming from database) 
+- **Auto-completion** : auto-complete while you are writing in a select element (suggestions coming from Javascript or an AJAX transaction)
+- **Slideshow** : customizable slideshow for pictures
+- **Form Ajax** : handler for AJAX forms
+- **Modal** : create a modal
+- **Input File** : replace the default input file by a more custonizable and cross browser element
 
 ## License
 
