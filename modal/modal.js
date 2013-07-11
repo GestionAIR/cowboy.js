@@ -20,11 +20,13 @@ cowboy.Modal = new Class ({
 	 * @param  {Element} modal		Element to show
 	 * @param  {Object} options		Options for the modal
 	 */
-	initialize: function(modal, options) {
+	initialize: function(modal, options, callback) {
 		var _this = this;
 		// Set Options and overload options by properties in the form
 		this.options = Object.merge(this.options, options);
 		this.setElementOptions(this.options, modal);
+
+		this.callback = callback;
 
 		this.isShown = false;
 
@@ -122,6 +124,9 @@ cowboy.Modal = new Class ({
 					_this.bckg.addClass('hidden');
 				});
 			}
+		}
+		if (typeof this.callback == 'function') {
+			window.setTimeout(this.callback, this.options.duration);
 		}
 	},
 
