@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Modal</title>
+	<style>
+	.hidden { display: none; }
+	.modal { padding: 10px; width: 600px; background-color: #FFF; position: absolute; top: -2000px; z-index: 99; }
+	.modal-bckg { position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; background-color: #000; opacity: 0; z-index: 98; }
+	.close-modal { margin: 10px 10px; float: right; }
+	</style>
+</head>
+<body>
+	<h1>Modal demonstration</h1>
+	
+	<button id="button1">Modal 1</button>
+	<button id="button2">Modal 2</button>
+
+	<div id="modal1" class="hidden modal">
+		<p>Here is a classic modal.</p>
+		<p>The only way to close it is to push the "Close" button</p>
+		<button class="close-modal">Close</button>
+	</div>
+	<div id="modal2" class="hidden modal">
+		<p>This modal is longer to open and close than the first</p>
+		<button class="close-modal">Close</button>
+	</div>
+
+	<div id="modalInit" class="hidden modal">
+		<p>This modal is shown directly after its initialization.</p>
+		<button class="close-modal">Close</button>
+	</div>
+
+	<div class="modal-bckg hidden"></div>
+
+	<script src="../mootools/mootools-core.js"></script>
+	<script src="../mootools/mootools-more.js"></script>
+	<script src="../cowboy.js"></script>
+	<script src="modal.js"></script>
+	<script>
+	window.addEvent('domready', function() {
+		var modalInit = new cowboy.Modal($('modalInit'), {
+			showOnInit: true
+		});
+		var modal1 = new cowboy.Modal($('modal1'), {
+			triggerer: 'button1',
+			closeOnBlur: false
+		});
+		var modal2 = new cowboy.Modal($('modal2'), {
+			triggerer: 'button2',
+			duration: 1000
+		});
+	});
+	</script>
+</body>
+</html>
