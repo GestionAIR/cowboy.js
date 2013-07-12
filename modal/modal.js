@@ -24,26 +24,34 @@ cowboy.Modal = new Class ({
 		var _this = this;
 		// Set Options and overload options by properties in the form
 		this.options = Object.merge(this.options, options);
-		this.setElementOptions(this.options, modal);
 
 		this.callback = callback;
 
 		this.isShown = false;
 
-		this.modal = modal;
+		if (typeof(modal) == 'object') {
+			this.setElementOptions(this.options, modal);
+
+			this.modal = modal;
+
+			this.modal.getElements('.close-modal').each(function(element) {
+				element.addEvent('click', function () {
+					_this.hide();
+				});
+			});
+
+		}
+		else if (typeof(modal) == 'string') {
+			this.url = modal;
+		}
+
 		if (this.options.triggerer && $(this.options.triggerer)) {
 			this.triggerer = $(this.options.triggerer);
 
 			this.triggerer.addEvent('click', function() {
-				_this.show();
+				_this.showAdapter();
 			});
 		}
-
-		this.modal.getElements('.close-modal').each(function(element) {
-			element.addEvent('click', function () {
-				_this.hide();
-			});
-		});
 
 		if (this.options.bckgClass && $$(this.options.bckgClass)) {
 			this.bckg = ($$('.' + this.options.bckgClass))[0];
@@ -55,8 +63,17 @@ cowboy.Modal = new Class ({
 		}
 
 		if (this.options.showOnInit) {
-			this.show();
+			this.showAdapter();
 		}
+	},
+
+	/**
+	 * Adapter to choose the 
+	 * @return {Function}
+	 */
+	showAdapter: function() {
+		if (this.url) return this.showAjax();
+		else if (typeof(this.modal) == 'object') return this.show();
 	},
 
 	/**
@@ -92,6 +109,34 @@ cowboy.Modal = new Class ({
 				window.addEvent('keydown', function(event){
 					if(event.key == 'esc') _this.hide();
 				});
+			}
+		}
+	},
+
+	showAjax: function() {
+		var _this = this;
+		if (!this.isShown) {
+			if (!this.modal) {
+				new Request.HTML({
+					url: this.url,
+					onSuccess: function(responseTree, responseElements, responseHTML) {
+						_this.modal = new Element('div', {
+							id: responseTree[0].id,
+							html: responseTree[0].innerHTML,
+							class: responseTree[0].classList
+						});
+						_this.modal.addClass(this.options.hiddenClass);
+						_this.modal.inject($(document.body));
+
+						_this.modal.getElements('.close-modal').each(function(element) {
+							element.addEvent('click', function () {
+								_this.hide();
+							});
+						});
+						_this.url = null;
+						_this.show();
+					}
+				}).get();
 			}
 		}
 	},
@@ -134,6 +179,6 @@ cowboy.Modal = new Class ({
 	 * Toggle modal
 	 */
 	toggle: function() {
-		return this[this.isShown ? 'hide' : 'show']();
+		return this[this.isShown ? 'hide' : 'showAdapter']();
 	}
 });

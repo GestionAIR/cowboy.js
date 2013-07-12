@@ -15,6 +15,7 @@
 	
 	<button id="button1">Modal 1</button>
 	<button id="button2">Modal 2</button>
+	<button id="button3">Modal 3</button>
 
 	<div id="modal1" class="hidden modal">
 		<p>Here is a classic modal.</p>
@@ -49,6 +50,10 @@
 		var modal2 = new cowboy.Modal($('modal2'), {
 			triggerer: 'button2',
 			duration: 1000
+		});
+		var modal3 = new cowboy.Modal('modal.html', {
+			triggerer: 'button3',
+			duration: 500
 		});
 	});
 	</script>
