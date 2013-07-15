@@ -45,10 +45,8 @@ cowboy.Modal = new Class ({
 			this.url = modal;
 		}
 
-		if (this.options.triggerer && $(this.options.triggerer)) {
-			this.triggerer = $(this.options.triggerer);
-
-			this.triggerer.addEvent('click', function() {
+		if (this.options.triggerer) {
+			this.options.triggerer.addEvent('click', function() {
 				_this.showAdapter();
 			});
 		}
