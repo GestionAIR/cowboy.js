@@ -12,7 +12,8 @@ cowboy.Modal = new Class ({
 		bckgClass: 'modal-bckg',
 		closeOnBlur: true,
 		escape: true,
-		showOnInit: false
+		showOnInit: false,
+		reloadOnEach: false
 	},
 
 	/**
@@ -117,6 +118,7 @@ cowboy.Modal = new Class ({
 			if (!this.modal) {
 				new Request.HTML({
 					url: this.url,
+					noCache: true,
 					onSuccess: function(responseTree, responseElements, responseHTML) {
 						_this.modal = new Element('div', {
 							id: responseTree[0].id,
@@ -131,7 +133,9 @@ cowboy.Modal = new Class ({
 								_this.hide();
 							});
 						});
-						_this.url = null;
+						if (this.options.reloadOnEach === false) {
+							_this.url = null;
+						}
 						_this.show();
 					}
 				}).get();
@@ -156,6 +160,10 @@ cowboy.Modal = new Class ({
 			});
 			modalFx.start({'top': [posY, -2000]}).chain(function() {
 				_this.modal.addClass('hidden');
+				if (_this.options.reloadOnEach) {
+					_this.modal.destroy();
+					_this.modal = null;
+				}
 			});
 
 			if (this.bckg) {
