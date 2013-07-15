@@ -20,6 +20,12 @@ cowboy.AutoCompletion = new Class({
 		url: null,
 		method: 'post'
 	},
+
+	/**
+	 * Constructor
+	 * @param  {Element}	input		Select element
+	 * @param  {Object}		options		Complementary options
+	 */
 	initialize: function(input, options) {
 		var _this = this;
 		this.input = input;
@@ -40,38 +46,43 @@ cowboy.AutoCompletion = new Class({
 		}
 		// Initialize all Events on input
 		// Close results on "virtual" blur of input
-		window.addEvent('click', this._closeResult.bind(this)); 
+		window.addEvent('click', this.closeResult.bind(this));
 		// Get data after a small delay
-		this.input.addEvent('keydown:pause(150)', this._getData.bind(this)); 
+		this.input.addEvent('keydown:pause(150)', this.getData.bind(this));
 		// Enter event to validate the tag & prevent default submit()
-		this.input.addEvent('keydown:keys(enter)', this._pushSelectedResult.bind(this));
+		this.input.addEvent('keydown:keys(enter)', this.pushSelectedResult.bind(this));
 		// Close results and focus the next input
-		this.input.addEvent('keydown:keys(tab)', this._closeResult.bind(this));
+		this.input.addEvent('keydown:keys(tab)', this.closeResult.bind(this));
 		// Navigation down direction
-		this.input.addEvent('keydown:keys(down)', this._navigate.bind(this)); 
+		this.input.addEvent('keydown:keys(down)', this.navigate.bind(this));
 		// Navigation up direction
-		this.input.addEvent('keydown:keys(up)', this._navigate.bind(this));
+		this.input.addEvent('keydown:keys(up)', this.navigate.bind(this));
 		// Close results
-		this.input.addEvent('keydown:keys(esc)', this._closeResult.bind(this));
+		this.input.addEvent('keydown:keys(esc)', this.closeResult.bind(this));
 		// Add Class on mouseenter a result
-		this.select.addEvent('mouseenter:relay(li)', function(e) { 
-			var li = e.target
+		this.select.addEvent('mouseenter:relay(li)', function(e) {
+			var li = e.target;
 			_this.select.getElements('ul li').each(function(eli) {
 				if (li == eli) eli.addClass('active');
 				else eli.removeClass('active'); // Remove all active on others
 			});
 		});
 		// Remove Class on mouseleave a result
-		this.select.addEvent('mouseleave:relay(li)', function(e) { 
-			var li = e.target
+		this.select.addEvent('mouseleave:relay(li)', function(e) {
+			var li = e.target;
 			_this.select.getElements('ul li').each(function(eli) {
 				if (li != eli) eli.removeClass('active');
 			});
 		});
 		// Add click event on a result to be selected
-		this.select.addEvent('click:relay(li)', this._selection.bind(this));
-	}
-	, _getData: function(e) {
+		this.select.addEvent('click:relay(li)', this.selection.bind(this));
+	},
+
+	/**
+	 * Get the data from AJAX transaction
+	 * @param  {Event}	e	Keyboard event
+	 */
+	getData: function(e) {
 		var _this = this;
 		this.select.setStyles({
 			top: this.input.offsetTop + this.input.offsetHeight + 20,
@@ -99,6 +110,7 @@ cowboy.AutoCompletion = new Class({
 							var html = '<ul>';
 							var i = 0;
 							while(i < _this.options.maxResult) {
+								if (!response.data[i]) break;
 								html += '<li>' + response.data[i].label + '</li>';
 								i++;
 							}
@@ -116,12 +128,17 @@ cowboy.AutoCompletion = new Class({
 				this.select.addClass('hidden');
 			}
 		}
-	}
-	// Navigate by keydown and keyup into results
-	, _navigate: function(e) {
+	},
+
+	/**
+	 * Navigate by keydown and keyup into results
+	 * @param  {Event}	e	Event triggered by keydown/keyup
+	 */
+	navigate: function(e) {
 		e.stop();
+		var active;
 		if (e.key == "down") {
-			var active = this.select.getElement('.active');
+			active = this.select.getElement('.active');
 			// check if an result is already selected
 			if (active) {
 				if (active.getNext('li')) {
@@ -134,12 +151,12 @@ cowboy.AutoCompletion = new Class({
 				}
 			}
 			// push an active on first Element of the list
-			else { 
+			else {
 				this.select.getFirst('ul li').addClass('active');
 			}
 		}
 		if (e.key == "up") {
-			var active = this.select.getElement('.active');
+			active = this.select.getElement('.active');
 			if (active) {
 				if (active.getPrevious('li')) {
 					active.removeClass('active');
@@ -154,24 +171,36 @@ cowboy.AutoCompletion = new Class({
 				this.select.getLast('ul li').addClass('active');
 			}
 		}
-	}
-	// Selection a result
-	, _selection: function(e) { 
+	},
+
+	/**
+	 * Select a result
+	 * @param  {Event}	e	Keyboard event
+	 */
+	selection: function(e) {
 		var inputSelected = e.target.get('text');
 		this.input.value = inputSelected;
 		this.input.focus();
 		this.select.addClass('hidden');
-		this._pushSelectedResult(e);
-	}
-	// Close result
-	, _closeResult: function(e) {
+		this.pushSelectedResult(e);
+	},
+
+	/**
+	 * Close result list
+	 */
+	closeResult: function() {
 		var active = this.select.getElement('.active');
 		if (active) active.removeClass('active');
 		this.select.addClass('hidden');
-	}
-	, _pushSelectedResult: function(e) {
+	},
+
+	/**
+	 * Set value from selected result
+	 * @param  {Event}	e	Event
+	 */
+	pushSelectedResult: function(e) {
 		e.stop();
-		if (this.input.value != "") {
+		if (this.input.value !== "") {
 			var active = this.select.getElement('.active');
 			if (active) { // A result selected we push it
 				this.input.value = active.get('text');
