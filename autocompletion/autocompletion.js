@@ -2,8 +2,7 @@
  * Class cowboy.AutoCompletion
  * Suggest Data by an Ajax request from a database
  *
- * TODO : • best support of "return" and keydown ...
-					• best support of collection 
+ * TODO :• best support of collection 
 					• this.collection = option.collection 
 						- Array passé dans l'option
 						- Function passé dans l'option
@@ -61,6 +60,7 @@ cowboy.AutoCompletion = new Class({
 			}
 			_this.closeResult();
 		});
+		this.input.addEvent('keydown:keys(backspace)', this.getData.bind(this));
 		// Navigation down direction
 		this.input.addEvent('keydown:keys(down)', this.navigate.bind(this));
 		// Navigation up direction
@@ -98,7 +98,7 @@ cowboy.AutoCompletion = new Class({
 			width: this.input.offsetWidth - 2
 		});
 		// Check if the keydown is alpha and one char prevent action keydown (esc,enter,shift...)
-		if (e.key.length==1 && /^[a-zA-Z0-9]$/.test(e.key)) {
+		if ((e.key.length == 1 && /^[a-zA-Z0-9]$/.test(e.key)) || e.key == 'backspace') {
 			// If the value has the minimum Char (option)
 			if (this.input.value.length >= this.options.minChar) {
 				new Request({
@@ -109,26 +109,18 @@ cowboy.AutoCompletion = new Class({
 						label: this.options.label,
 						value: this.input.value
 					},
-					/*onRequest: function() {
-						console.log('Sending search...');
-					},*/
 					onSuccess: function(response) {
 						response = JSON.decode(response);
-						if (response.data.length > 0) {
-							var html = '<ul>';
-							var i = 0;
-							while(i < _this.options.maxResult) {
-								if (!response.data[i]) break;
-								html += '<li>' + response.data[i].label + '</li>';
-								i++;
-							}
-							html += '</ul>';
-							_this.select.set('html', html);
-							_this.select.removeClass('hidden');
+						var html = '<ul>';
+						var i = 0;
+						while(i < _this.options.maxResult) {
+							if (!response.data[i]) break;
+							html += '<li>' + response.data[i].label + '</li>';
+							i++;
 						}
-						/*else { 
-							console.log('No result');
-						}*/
+						html += '</ul>';
+						_this.select.set('html', html);
+						_this.select.removeClass('hidden');
 					}
 				}).send();
 			}
