@@ -2,8 +2,7 @@
  * Class cowboy.AutoCompletion
  * Suggest Data by an Ajax request from a database
  *
- * TODO : • best support of "tab" (if a result is selected push it) 
- *				• best support of "return" and keydown ...
+ * TODO : • best support of "return" and keydown ...
 					• best support of collection 
 					• this.collection = option.collection 
 						- Array passé dans l'option
@@ -52,7 +51,16 @@ cowboy.AutoCompletion = new Class({
 		// Enter event to validate the tag & prevent default submit()
 		this.input.addEvent('keydown:keys(enter)', this.pushSelectedResult.bind(this));
 		// Close results and focus the next input
-		this.input.addEvent('keydown:keys(tab)', this.closeResult.bind(this));
+		this.input.addEvent('keydown:keys(tab)', function(e) {
+			if (_this.select.getElement('.active') !== null) {
+				var inputSelected = _this.select.getElement('.active');
+				_this.input.value = inputSelected;
+				_this.input.focus();
+				_this.select.addClass('hidden');
+				_this.pushSelectedResult(e);
+			}
+			_this.closeResult();
+		});
 		// Navigation down direction
 		this.input.addEvent('keydown:keys(down)', this.navigate.bind(this));
 		// Navigation up direction
