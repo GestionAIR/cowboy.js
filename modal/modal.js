@@ -133,7 +133,7 @@ cowboy.Modal = new Class ({
 								_this.hide();
 							});
 						});
-						if (this.options.reloadOnEach === false) {
+						if (this.options.reloadOnEach !== true) {
 							_this.url = null;
 						}
 						_this.show();
