@@ -8,7 +8,8 @@ cowboy.LogBar = new Class({
 		transition: 'Expo.easeOut',
 		displayOnStartup: false,
 		logbarHeight: 56,
-		idContent: 'log'
+		idContent: 'log',
+		statusList: ['log-error', 'log-success', 'log-load', 'log-warning']
 	},
 
 	/**
@@ -75,6 +76,14 @@ cowboy.LogBar = new Class({
 			// Write that the logbar is down
 			this.status = false;
 		}
+	},
+
+	changeStatus: function(newStatus) {
+		var _this = this;
+		this.options.statusList.each(function(status) {
+			$(_this.options.idContent).removeClass(status);
+		});
+		$(this.options.idContent).addClass(newStatus);
 	}
 });
 

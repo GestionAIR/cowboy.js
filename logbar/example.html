@@ -43,10 +43,10 @@
 			</p>
 			<p>
 				<strong>Logbar status :</strong>
-				<button onclick="$('log').set('class', null).addClass('log-error')">Error</button>
-				<button onclick="$('log').set('class', null).addClass('log-success')">Success</button>
-				<button onclick="$('log').set('class', null).addClass('log-warning')">Warning</button>
-				<button onclick="$('log').set('class', null).addClass('log-load')">Load</button>
+				<button onclick="LOGBAR.changeStatus('log-error')">Error</button>
+				<button onclick="LOGBAR.changeStatus('log-success')">Success</button>
+				<button onclick="LOGBAR.changeStatus('log-warning')">Warning</button>
+				<button onclick="LOGBAR.changeStatus('log-load')">Load</button>
 			</p>
 		</div>
 
