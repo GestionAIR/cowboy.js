@@ -32,14 +32,14 @@
 		<div>
 			<p>
 				<strong>Logbar control :</strong>
-				<button onclick="LOGBAR._show()">Show</button>
-				<button onclick="LOGBAR._hide()">Hide</button>
-				<button onclick="LOGBAR._show(3000)">Show for 3 seconds</button>
+				<button onclick="LOGBAR.show({duration: 3000, text: 'Logbar is shown for 3 seconds'})">Show for 3 seconds</button>
+				<button onclick="LOGBAR.show({text: 'To hide it, press \'Hide\' button'})">Show without any time limit</button>
+				<button onclick="LOGBAR.hide()">Hide</button>
 			</p>
 			<p>
 				<strong>Logbar content :</strong> is supposed to be generated server-side and put in <strong>#log</strong>
-				<button onclick="$('log').set('html', 'Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1')">Text 1</button>
-				<button onclick="$('log').set('html', 'Some server-side generated text')">Some server-side generated text</button>
+				<button onclick="LOGBAR.show({text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam, nam.'})">Show with some random text</button>
+				<button onclick="LOGBAR.show({text: 'Excepturi, reiciendis fugiat quibusdam a recusandae beatae eum ut iusto minima velit!', duration: 3000})">An other text</button>
 			</p>
 			<p>
 				<strong>Logbar status :</strong>
