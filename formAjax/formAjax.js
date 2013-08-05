@@ -7,9 +7,9 @@ cowboy.FormAjax = new Class ({
 	options: {
 		invalidFieldMessage: 'Please fill this field',
 		redirectDelay: 1000,
-		onRequest: null,
-		onSuccess: null,
-		onFailure: null,
+		onRequest: function() { return; },
+		onSuccess: function(response) { return; },
+		onFailure: function() { return; },
 		redirect: null
 	},
 
@@ -17,10 +17,10 @@ cowboy.FormAjax = new Class ({
 	 * Create a FormAjax
 	 * @param  {Element}	form		Form element
 	 * @param  {Object}		options		Form options
-	 * @param  {Function}	callback	Callback
 	 */
-	initialize: function(form, options, callback) {
+	initialize: function(form, options) {
 		this.form = form;
+		var _this = this;
 
 		this.options = Object.merge(this.options, options);
 
@@ -30,15 +30,24 @@ cowboy.FormAjax = new Class ({
 		this.form.setProperty('autocomplete', 'off');
 		this.form.addEvent('submit', this.submit.bind(this));
 
-		var _this = this;
-
 		this.form.getElements('.required').each(function(el){
 			el.addEvent('focus', _this.focus);
 			el.addEvent('blur', _this.blur.bind(_this));
 		});
 
-		if (typeof callback == 'function') this.callback = callback;
-		else this.callback = null;
+		this.uploadReq = new cowboy.Request({
+			onRequest: function() {
+				return _this.options.onRequest();
+			},
+
+			onSuccess: function(response) {
+				return _this.options.onSuccess(JSON.decode(response));
+			},
+
+			onFailure: function() {
+				return _this.options.onFailure();
+			}
+		});
 	},
 
 	/**
@@ -51,10 +60,9 @@ cowboy.FormAjax = new Class ({
 		this.showErrors();
 
 		if (this.form.getElements('.error').length === 0) {
-			this.data = this.getFormData();
-			this.url = this.form.getProperty('action');
+			this.getFormData();
 
-			this.sendFormAjax();
+			this.uploadReq.send({ url: this.form.getProperty('action') });
 		}
 	},
 
@@ -95,80 +103,38 @@ cowboy.FormAjax = new Class ({
 
 	/**
 	 * Get data to submit
-	 * @return	{Object}	Data
 	 */
 	getFormData: function() {
-		var data = {};
+		var _this = this;
 
 		this.form.getElements('input[name]').each(function(el) {
 			if (el.getProperty('type') == 'checkbox') {
 				if (el.checked === true) {
-					data[el.name] = el.value;
+					_this.uploadReq.append(el.name, el.value);
 				}
 				else {
-					data[el.name] = 0;
+					_this.uploadReq.append(el.name, 0);
 				}
 			}
 			else if (el.getProperty('type') == 'radio') {
 				if (el.checked === true) {
-					data[el.name] = el.value;
+					_this.uploadReq.append(el.name, el.value);
 				}
 			}
+			else if(el.getProperty('type') == 'file') {
+				_this.uploadReq.append(el.name, el.files[0]);
+			}
 			else {
-				data[el.name] = el.value;
+				_this.uploadReq.append(el.name, el.value);
 			}
 		});
 
 		this.form.getElements('select[name]').each(function(el){
-			data[el.name] = el.value;
+			_this.uploadReq.append(el.name, el.value);
 		});
 
 		this.form.getElements('textarea[name]').each(function(el){
-			data[el.name] = el.value;
+			_this.uploadReq.append(el.name, el.value);
 		});
-
-		return data;
-	},
-
-	/**
-	 * Send data in AJAX
-	 */
-	sendFormAjax: function() {
-		var _this = this;
-
-		new Request({
-			url: this.url,
-			method: 'post',
-			data: this.data,
-
-			onRequest: function() {
-				if (_this.options.onRequest !== null) {
-					window[_this.options.onRequest]();
-				}
-			},
-
-			onSuccess: function(response) {
-
-				_this.response = JSON.decode(response);
-
-				if (_this.options.onSuccess !== null) {
-					window[_this.options.onSuccess](JSON.parse(response));
-				}
-
-				if (_this.callback) {
-					_this.callback(JSON.parse(response));
-				}
-
-				if (_this.options.redirect !== null && _this.options.redirect != 'stop') {
-					(function() { window.location = _this.options.redirect; }).delay(_this.options.redirectDelay);
-				}
-			},
-
-			onFailure: function() {
-				if (_this.options.onFailure !== null) {
-					window[_this.options.onFailure](JSON.parse());
-				}
-			}
-		}).send();
 	}
 });

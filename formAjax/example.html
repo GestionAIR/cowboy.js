@@ -3,6 +3,20 @@
 <head>
 	<meta charset="UTF-8">
 	<title>FormAjax</title>
+	<style>
+		body {
+			margin: 0 auto 0 auto;
+			width: 800px;
+		}
+		h1 {
+			text-align: center;
+		}
+
+		label { margin-top:30px; font-size:13px; }
+
+		input:not([type="submit"]) { clear:both; color:#303030; font-size:12px; color:#565656; height:15px; padding:5px; border:1px solid #e5e5e5; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; }
+		input:focus { box-shadow:0px 0px 10px rgba(146, 146, 146, 0.3); }
+	</style>
 </head>
 <body>
 	<h1>FormAjax demonstration</h1>
@@ -23,26 +37,24 @@
 	<script src="../cowboy.js"></script>
 	<script src="formAjax.js"></script>
 	<script>
-
-		var success = function(data) {
-			if (data.status == 'success') {
-				var html = 'Name: ' + data['name'] + '<br> Surname: ' + data['surname'] + '<br> Age: ' + data['age'];
-				if (data['email']) {
-					html += '<br>Email: ' + data['email'];
-				}
-				document.getElement('#output').set('html', html);
-			}
-			else if (data.status == 'failed') {
-				document.getElement('#output').set('html', data.message);
-			}
-		};
-
-		var loading = function() {
-			console.log('loading');
-		};
-
 		window.addEvent('domready', function() {
-			new cowboy.FormAjax(document.getElement('#contactForm'), {onSuccess: 'success', onRequest: 'loading'});
+			new cowboy.FormAjax(document.getElement('#contactForm'), {
+				onSuccess: function(data) {
+					if (data.status == 'success') {
+						var html = 'Name: ' + data['name'] + '<br> Surname: ' + data['surname'] + '<br> Age: ' + data['age'];
+						if (data['email']) {
+							html += '<br>Email: ' + data['email'];
+						}
+						$('output').set('html', html);
+					}
+					else if (data.status == 'failed') {
+						document.getElement('output').set('html', data.message);
+					}
+				},
+				onRequest: function() {
+					console.log('loading');
+				}
+			});
 		});
 	</script>
 </body>
