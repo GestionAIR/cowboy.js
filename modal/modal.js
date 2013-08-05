@@ -13,7 +13,8 @@ cowboy.Modal = new Class ({
 		closeOnBlur: true,
 		escape: true,
 		showOnInit: false,
-		reloadOnEach: false
+		reloadOnEach: false,
+		callback: function() { return; }
 	},
 
 	/**
@@ -21,12 +22,10 @@ cowboy.Modal = new Class ({
 	 * @param  {Element} modal		Element to show
 	 * @param  {Object} options		Options for the modal
 	 */
-	initialize: function(modal, options, callback) {
+	initialize: function(modal, options) {
 		var _this = this;
 		// Set Options and overload options by properties in the form
 		this.options = Object.merge(this.options, options);
-
-		this.callback = callback;
 
 		this.isShown = false;
 
@@ -176,8 +175,8 @@ cowboy.Modal = new Class ({
 				});
 			}
 		}
-		if (typeof this.callback == 'function') {
-			window.setTimeout(this.callback, this.options.duration);
+		if (typeof this.options.callback == 'function') {
+			window.setTimeout(this.options.callback, this.options.duration);
 		}
 	},
 
