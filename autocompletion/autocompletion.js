@@ -210,31 +210,3 @@ cowboy.AutoCompletion = new Class({
 		}
 	}
 });
-
-/*
-DRAFT
-
-var getData = function(value, callback) {
-	var _this = this;
-	new Request({
-		url: 'collection.php',
-		method:'post',
-		data: {
-			collection: _this.options.collection,
-			label: _this.options.label,
-			value: value
-		},
-		onRequest: function() {
-			//console.log('Sending search...');
-		},
-		onSuccess: function(response) {
-			response = JSON.decode(response);
-			callback();
-		}
-	}).send();
-}
-
-function callback() {
-	console.log('truc');
-}
-*/
