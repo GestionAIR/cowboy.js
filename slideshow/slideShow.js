@@ -1,5 +1,7 @@
 /**
- * Create a slide for pictures
+ * Create a slideshow for pictures or text
+ * @class cowboy.SlideShow
+ * @implements {cowboy.Options}
  */
 cowboy.SlideShow = new Class({
 	Implements: cowboy.Options,
@@ -14,6 +16,12 @@ cowboy.SlideShow = new Class({
 		allowKeyboardArrows: true,
 	},
 
+	/**
+	 * Constructor
+	 * @constructor
+	 * @param  {Element} element Element where the slideshow will be inserted
+	 * @param  {Object} options Options passed to the class
+	 */
 	initialize: function(element, options) {
 		_this = this;
 		this.slideShow = element;
@@ -34,17 +42,17 @@ cowboy.SlideShow = new Class({
 		};
 
 		// Create and add events on control elements
-		this._buildControls();
+		this.buildControls();
 
 		if (this.options.autoSlide && this.options.loop) {
-			this._setPeriodical();
+			this.setPeriodical();
 		}
 
 		if (this.options.slideOnClick) {
 			this.container.addEvent('click', function(e) {
 				e.stop();
-				_this._slide(_this.options.defaultDirection);
-			})
+				_this.slide(_this.options.defaultDirection);
+			});
 		}
 
 		this.slideWidth = this.slideShow.getWidth();
@@ -54,10 +62,11 @@ cowboy.SlideShow = new Class({
 
 	/**
 	 * Set periodical on the slideshow
+	 * @method setPeriodical
 	 */
-	_setPeriodical: function() {
+	setPeriodical: function() {
 		var fx = function() {
-			_this._slide(_this.options.defaultDirection);
+			_this.slide(_this.options.defaultDirection);
 		};
 
 		this.periodicalAnim = fx.periodical(this.options.periodical);
@@ -74,54 +83,57 @@ cowboy.SlideShow = new Class({
 
 	/**
 	 * Slide in the specified direction
+	 * @method slide
 	 * @param  {String} direction Direction to slide
 	 */
-	_slide: function(direction) {
+	slide: function(direction) {
 		if (!direction) direction = this.options.defaultDirection;
 
 		if (direction == 'right') {
 			if (this.actualSlide < this.nbSlides) this.actualSlide++;
-			else if (this.options.loop == true) this.actualSlide = 1;
+			else if (this.options.loop === true) this.actualSlide = 1;
 		}
 		else if (direction == 'left') {
 			if (this.actualSlide > 1 ) this.actualSlide--;
-			else if (this.options.loop == true) this.actualSlide = this.nbSlides;
+			else if (this.options.loop === true) this.actualSlide = this.nbSlides;
 		}
 
-		this._goTo(this.actualSlide);
+		this.goTo(this.actualSlide);
 	},
 
 	/**
 	 * Go to specified slide
+	 * @method goTo
 	 * @param  {Number} number 
 	 */
-	_goTo: function(number) {
+	goTo: function(number) {
 		this.actualSlide = number;
 
 		var marginLeft = -(this.actualSlide - 1) * this.slideWidth;
 		this.container.set('tween', {transition: window['Fx.Transitions.' + this.options.transition]});
 		this.container.tween('margin-left', marginLeft);
 
-		this._resetActive();
+		this.resetActive();
 	},
 
 	/**
 	 * Create different controls
+	 * @method buildControls
 	 */
-	_buildControls: function() {
+	buildControls: function() {
 		var _this = this;
 
 		// Right / Left controls
 		this.controls.left.each(function(control) {
 			control.addEvent('click', function(e) {
 				e.stop();
-				_this._slide('left');
+				_this.slide('left');
 			});
 		});
 		this.controls.right.each(function(control) {
 			control.addEvent('click', function(e) {
 				e.stop();
-				_this._slide('right');
+				_this.slide('right');
 			});
 		});
 
@@ -131,13 +143,13 @@ cowboy.SlideShow = new Class({
 				e.stopPropagation();
 				if(e.key == 'left') {
 					// Left
-					_this._slide('left');
+					_this.slide('left');
 				}
 				else if(e.key == 'right') {
 					// Right
-					_this._slide('right');
+					_this.slide('right');
 				}
-			})
+			});
 		}
 
 		// Direct selector
@@ -148,18 +160,19 @@ cowboy.SlideShow = new Class({
 			_this.container.getChildren('.slide').each(function(element, index) {
 				model.clone().addEvent('click', function(e) {
 					e.stop();
-					_this._goTo(index + 1);
+					_this.goTo(index + 1);
 				}).inject(sel);
 			});
 		});
 
-		this._resetActive();
+		this.resetActive();
 	},
 
 	/**
 	 * Set the active slide on selector
+	 * @method resetActive
 	 */
-	_resetActive: function() {
+	resetActive: function() {
 		_this = this;
 		this.controls.selector.each(function(sel) {
 			sel.getChildren().each(function(child) {
@@ -171,8 +184,9 @@ cowboy.SlideShow = new Class({
 
 	/**
 	 * Toggle automatic slideshow
+	 * @method toggleAutoSlide
 	 */
-	_toggleAutoSlide: function() {
+	toggleAutoSlide: function() {
 		if (this.options.autoSlide) {
 			this.options.autoSlide = false;
 			clearInterval(this.periodicalAnim);
@@ -180,9 +194,9 @@ cowboy.SlideShow = new Class({
 		else {
 			this.options.autoSlide = true;
 			var fx = function() {
-				_this._slide(_this.options.defaultDirection);
+				_this.slide(_this.options.defaultDirection);
 			};
 			this.periodicalAnim = fx.periodical(this.options.periodical);
 		}
 	}
-})
+});

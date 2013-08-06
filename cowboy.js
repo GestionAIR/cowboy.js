@@ -1,8 +1,23 @@
-// Define cowboy.js namespace
+/**
+ * Cowboy is a powerful extension to Mootools Framework
+ * @namespace cowboy namespace
+ */
 var cowboy = {};
 
+/**
+ * Extension to the Mootools Options
+ * @class cowboy.Options
+ * @implements {Options}
+ */
 cowboy.Options = new Class({
 	Implements: Options,
+
+	/**
+	 * Extension to setOptions to get parameters from the element
+	 * @method setElementOptions
+	 * @param  {Object} options Options of the class
+	 * @param  {Element} element Element used by the class
+	 */
 	setElementOptions: function(options, element) {
 		Object.keys(Object.clone(options)).each(function(property) {
 			if(element.getProperty('data-' + property)) {
@@ -15,8 +30,9 @@ cowboy.Options = new Class({
 
 /**
  * Extension to Mootools Request to handle file upload
- * @description From mloberg
- * @link https://gist.github.com/mloberg/1342473
+ * @class cowboy.Request
+ * @extends {Request}
+ * @link By mloberg : https://gist.github.com/mloberg/1342473
  */
 cowboy.Request = new Class({
 
@@ -29,6 +45,7 @@ cowboy.Request = new Class({
 
 	/**
 	 * Constructor
+	 * @constructor
 	 * @param  {Object} options Options for the request
 	 */
 	initialize: function(options) {
@@ -40,6 +57,7 @@ cowboy.Request = new Class({
 
 	/**
 	 * Append data to the request
+	 * @method append
 	 * @param  {String} key		Key
 	 * @param  {Mixed} value	Value associated to the key
 	 * @return {cowboy.Request} Itself
@@ -51,6 +69,7 @@ cowboy.Request = new Class({
 
 	/**
 	 * Reset the form
+	 * @method reset
 	 * @return {[type]} [description]
 	 */
 	reset: function() {
@@ -59,6 +78,7 @@ cowboy.Request = new Class({
 
 	/**
 	 * Send the request
+	 * @method send
 	 * @param  {Object} options Options for the request
 	 * @return {cowboy.Request} Itself
 	 */

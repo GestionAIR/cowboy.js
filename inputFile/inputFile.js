@@ -1,9 +1,8 @@
-/* 
- * Class cowboy.InputFile
+/**
  * Make an input[type=file] 
- *
- * TODO : Support Multiple Files
- *        Automaticaly put sizes in errors messages
+ * @class cowboy.InputFile
+ * @implements {cowboy.Options}
+ * @todo Support Multiple Files
  */
 cowboy.InputFile = new Class({
 	Implements: cowboy.Options,
@@ -14,8 +13,15 @@ cowboy.InputFile = new Class({
 		maxSizeMessage: "File size needs to be less than %d%",
 		requiredType: null,
 		requiredTypeMessage: "File type is not correct",
-	}
-	, initialize: function(input, options) {
+	},
+
+	/**
+	 * Constructor
+	 * @constructor
+	 * @param  {Element} input   Input file to use
+	 * @param  {Object} options  Options
+	 */
+	initialize: function(input, options) {
 		var _this = this;
 		this.input = input;
 		this.options = Object.merge(this.options, options);
@@ -45,31 +51,35 @@ cowboy.InputFile = new Class({
 		icon.inject(fakeInputFileContener);
 
 		// Add Event to control the value
-		this.input.addEvent('change', _this._check.bind(_this));
+		this.input.addEvent('change', _this.check.bind(_this));
 
 		// Add Events on fake input and icon to focus the input
-    	this.fakeInputFile.addEvent('focus', function (e) { 
-    		e.stop(); 
-    		_this.input.focus(); 
-    		_this.input.click();
-    		$$('html')[0].focus();
-    	});
-    	icon.addEvent('click', function () { _this.input.click(); });
-	}
-	, _check: function() {
+		this.fakeInputFile.addEvent('focus', function (e) {
+			e.stop();
+			_this.input.focus();
+			_this.input.click();
+			$$('html')[0].focus();
+		});
+		icon.addEvent('click', function () { _this.input.click(); });
+	},
+	
+	/**
+	 * Check if file meets expectations
+	 * @method check
+	 */
+	check: function() {
 		// with FileAPI
-		if (window.File && window.Blob) { 
+		if (window.File && window.Blob) {
 			var file = this.input.files[0];
 
 			// Check Type
-			if ((this.options.requiredType == null || file.type == this.options.requiredType || this.options.requiredType.contains(file.type))
-				 && file.size >= this.options.minSize && file.size <= this.options.maxSize) {
+			if ((this.options.requiredType === null || file.type == this.options.requiredType || this.options.requiredType.contains(file.type)) && file.size >= this.options.minSize && file.size <= this.options.maxSize) {
 				this.fakeInputFile.value = file.name; // Show filename
 				this.fakeInputFile.removeClass('log-error').addClass('log-validated');
 			}
 			// Show Warnings
 			else {
-				if (this.options.requiredType != null && (file.type != this.options.requiredType || !this.options.requiredType.contains(file.type))) {
+				if (this.options.requiredType !== null && (file.type != this.options.requiredType || !this.options.requiredType.contains(file.type))) {
 					this.fakeInputFile.value = this.options.requiredTypeMessage;
 					this.fakeInputFile.removeClass('log-validated').addClass('log-error');
 				}

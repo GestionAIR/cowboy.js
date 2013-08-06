@@ -1,6 +1,7 @@
 /* 
- * Class cowboy.LogBar
  * Displays a status bar in the bottom of the screen
+ * @class cowboy.LogBar
+ * @implements {cowboy.Options}
  */
 cowboy.LogBar = new Class({
 	Implements: cowboy.Options,
@@ -14,6 +15,7 @@ cowboy.LogBar = new Class({
 
 	/**
 	 * Constructor
+	 * @constructor
 	 * @param  {Object}	options	Options
 	 */
 	initialize: function(options) {
@@ -29,6 +31,7 @@ cowboy.LogBar = new Class({
 
 	/**
 	 * Display the logbar
+	 * @method show
 	 * @param  {Object}	options	Options
 	 */
 	show: function(options) {
@@ -63,6 +66,7 @@ cowboy.LogBar = new Class({
 
 	/**
 	 * Hide the logbar
+	 * @method hide
 	 */
 	hide: function() {
 		// If the logbar is not visible, do nothing
@@ -78,6 +82,11 @@ cowboy.LogBar = new Class({
 		}
 	},
 
+	/**
+	 * Change the logbar staus
+	 * @method changeStatus
+	 * @param  {String} newStatus New status to apply
+	 */
 	changeStatus: function(newStatus) {
 		var _this = this;
 		this.options.statusList.each(function(status) {

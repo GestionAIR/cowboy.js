@@ -1,5 +1,7 @@
 /**
  * AJAX form creation
+ * @class cowboy.FormAjax
+ * @implements {cowboy.Options}
  */
 cowboy.FormAjax = new Class ({
 	Implements: cowboy.Options,
@@ -15,6 +17,7 @@ cowboy.FormAjax = new Class ({
 
 	/**
 	 * Create a FormAjax
+	 * @constructor
 	 * @param  {Element}	form		Form element
 	 * @param  {Object}		options		Form options
 	 */
@@ -52,6 +55,7 @@ cowboy.FormAjax = new Class ({
 
 	/**
 	 * Submit the form
+	 * @method submit
 	 * @param  {Event}	e	Event that triggers the submit
 	 */
 	submit: function(e) {
@@ -68,6 +72,7 @@ cowboy.FormAjax = new Class ({
 
 	/**
 	 * Event triggered on input focus
+	 * @method focus
 	 * @param  {Event}	e	Event when an input is focused
 	 */
 	focus: function(e){
@@ -79,6 +84,7 @@ cowboy.FormAjax = new Class ({
 
 	/**
 	 * Event triggered on input blur
+	 * @method blur
 	 * @param  {Event}	e	Event when an input is blured
 	 */
 	blur: function(e){
@@ -90,6 +96,7 @@ cowboy.FormAjax = new Class ({
 
 	/**
 	 * Show the form errors
+	 * @method showErrors
 	 */
 	showErrors: function() {
 		_this = this;
@@ -103,6 +110,7 @@ cowboy.FormAjax = new Class ({
 
 	/**
 	 * Get data to submit
+	 * @method getFormData
 	 */
 	getFormData: function() {
 		var _this = this;

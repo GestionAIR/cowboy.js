@@ -1,23 +1,34 @@
 /* 
- * Class cowboy.Toggles
  * Toggles visibility of an element
+ * @class cowboy.Toggles
  */
 cowboy.Toggles = new Class({
+
+	/**
+	 * Constructor
+	 * @constructor
+	 */
 	initialize: function() {
 		var _this = this;
 
 		// For each .toggler
 		$$('.toggler').each(function(toggler) {
 			// Handle some events
-			toggler.addEvent('click',_this._show);
+			toggler.addEvent('click',_this.show);
 			toggler.addEvent('dblclick', function(e) { e.stop(); });
 
 			// TODO
 			//var button = new Element('span', {"class":"button"});
 			//button.inject(toggler);
 		});
-	}
-	, _show : function(e) {
+	},
+
+	/**
+	 * Show the full element
+	 * @method show
+	 * @param  {Element} e Element to show
+	 */
+	show : function(e) {
 		var _this = this;
 
 		// Get the element to show/hide

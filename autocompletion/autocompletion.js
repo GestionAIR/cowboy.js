@@ -1,12 +1,8 @@
-/* 
- * Class cowboy.AutoCompletion
+/**
  * Suggest Data by an Ajax request from a database
- *
- * TODO :• best support of collection 
-					• this.collection = option.collection 
-						- Array passé dans l'option
-						- Function passé dans l'option
-						- Rien == getData interne
+ * @class cowboy.AutoCompletion
+ * @implements {cowboy.Options}
+ * @todo Best support of collection
  */
 cowboy.AutoCompletion = new Class({
 	Implements: cowboy.Options,
@@ -21,6 +17,7 @@ cowboy.AutoCompletion = new Class({
 
 	/**
 	 * Constructor
+	 * @constructor
 	 * @param  {Element}	input		Select element
 	 * @param  {Object}		options		Complementary options
 	 */
@@ -88,6 +85,7 @@ cowboy.AutoCompletion = new Class({
 
 	/**
 	 * Get the data from AJAX transaction
+	 * @method getData
 	 * @param  {Event}	e	Keyboard event
 	 */
 	getData: function(e) {
@@ -132,6 +130,7 @@ cowboy.AutoCompletion = new Class({
 
 	/**
 	 * Navigate by keydown and keyup into results
+	 * @method navigate
 	 * @param  {Event}	e	Event triggered by keydown/keyup
 	 */
 	navigate: function(e) {
@@ -175,6 +174,7 @@ cowboy.AutoCompletion = new Class({
 
 	/**
 	 * Select a result
+	 * @method selection
 	 * @param  {Event}	e	Keyboard event
 	 */
 	selection: function(e) {
@@ -187,6 +187,7 @@ cowboy.AutoCompletion = new Class({
 
 	/**
 	 * Close result list
+	 * @method closeResult
 	 */
 	closeResult: function() {
 		var active = this.select.getElement('.active');
@@ -196,6 +197,7 @@ cowboy.AutoCompletion = new Class({
 
 	/**
 	 * Set value from selected result
+	 * @method  pushSelectedResult
 	 * @param  {Event}	e	Event
 	 */
 	pushSelectedResult: function(e) {

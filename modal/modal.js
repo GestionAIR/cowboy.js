@@ -1,5 +1,7 @@
 /**
  * Class to easily create modals
+ * @class cowboy.Modal
+ * @implements {cowboy.Options}
  */
 cowboy.Modal = new Class ({
 	Implements: cowboy.Options,
@@ -19,6 +21,7 @@ cowboy.Modal = new Class ({
 
 	/**
 	 * Constructor
+	 * @constructor
 	 * @param  {Element} modal		Element to show
 	 * @param  {Object} options		Options for the modal
 	 */
@@ -66,7 +69,8 @@ cowboy.Modal = new Class ({
 	},
 
 	/**
-	 * Adapter to choose the 
+	 * Adapter to choose the way to show the modal
+	 * @method showAdapter
 	 * @return {Function}
 	 */
 	showAdapter: function() {
@@ -111,6 +115,10 @@ cowboy.Modal = new Class ({
 		}
 	},
 
+	/**
+	 * Show the modal by loading it with an AJAX transaction
+	 * @method showAjax
+	 */
 	showAjax: function() {
 		var _this = this;
 		if (!this.isShown) {
@@ -144,6 +152,7 @@ cowboy.Modal = new Class ({
 
 	/**
 	 * Hide the modal
+	 * @method hide
 	 */
 	hide: function() {
 		var _this = this;
@@ -182,6 +191,7 @@ cowboy.Modal = new Class ({
 
 	/**
 	 * Toggle modal
+	 * @method toggle
 	 */
 	toggle: function() {
 		return this[this.isShown ? 'hide' : 'showAdapter']();
