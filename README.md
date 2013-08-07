@@ -15,7 +15,7 @@ JS components built on top of [Mootools](http://mootools.net/) to make [GestionA
 - **Form Ajax** : handler for AJAX forms
 - **Modal** : create a modal
 - **Input File** : replace the default input file by a more custonizable and cross browser element
-- **Input Length Counter : A nice counter (maxlength) with some cool options to display the number of remaining chars of a field (input / textarea)
+- **Input Length Counter** : A nice counter (maxlength) with some cool options to display the number of remaining chars of a field (input / textarea)
 
 ## License
 
