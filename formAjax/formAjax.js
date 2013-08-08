@@ -13,7 +13,8 @@ cowboy.FormAjax = new Class ({
 		onSuccess: function(response) { return; },
 		onFailure: function() { return; },
 		redirect: null,
-		dataContainer: null
+		dataContainer: null,
+		beforeRequest: function() { return; }
 	},
 
 	/**
@@ -73,6 +74,8 @@ cowboy.FormAjax = new Class ({
 
 		if (this.form.getElements('.error').length === 0) {
 			this.getFormData();
+
+			this.options.beforeRequest();
 
 			this.uploadReq.send({ url: this.form.getProperty('action') });
 		}
