@@ -22,35 +22,42 @@ cowboy.FormAjax = new Class ({
 	 * @param  {Object}		options		Form options
 	 */
 	initialize: function(form, options) {
-		this.form = form;
 		var _this = this;
+		if (form instanceof HTMLElement) {
+			this.form = form;
 
-		this.options = Object.merge(this.options, options);
+			this.options = Object.merge(this.options, options);
 
-		// Set Options and overload options by properties in the form
-		this.setElementOptions(this.options, form);
+			// Set Options and overload options by properties in the form
+			this.setElementOptions(this.options, form);
 
-		this.form.setProperty('autocomplete', 'off');
-		this.form.addEvent('submit', this.submit.bind(this));
+			this.form.setProperty('autocomplete', 'off');
+			this.form.addEvent('submit', this.submit.bind(this));
 
-		this.form.getElements('.required').each(function(el){
-			el.addEvent('focus', _this.focus);
-			el.addEvent('blur', _this.blur.bind(_this));
-		});
+			this.form.getElements('.required').each(function(el){
+				el.addEvent('focus', _this.focus);
+				el.addEvent('blur', _this.blur.bind(_this));
+			});
 
-		this.uploadReq = new cowboy.Request({
-			onRequest: function() {
-				return _this.options.onRequest();
-			},
+			this.uploadReq = new cowboy.Request({
+				onRequest: function() {
+					return _this.options.onRequest();
+				},
 
-			onSuccess: function(response) {
-				return _this.options.onSuccess(JSON.decode(response));
-			},
+				onSuccess: function(response) {
+					return _this.options.onSuccess(JSON.decode(response));
+				},
 
-			onFailure: function() {
-				return _this.options.onFailure();
+				onFailure: function() {
+					return _this.options.onFailure();
+				}
+			});
+		}
+		else if (form instanceof Object) {
+			for (var i = form.length - 1; i >= 0; i--) {
+				new cowboy.FormAjax(form[i], options);
 			}
-		});
+		}
 	},
 
 	/**
@@ -68,6 +75,8 @@ cowboy.FormAjax = new Class ({
 
 			this.uploadReq.send({ url: this.form.getProperty('action') });
 		}
+
+		this.uploadReq.reset();
 	},
 
 	/**
