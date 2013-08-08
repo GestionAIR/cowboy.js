@@ -12,7 +12,8 @@ cowboy.FormAjax = new Class ({
 		onRequest: function() { return; },
 		onSuccess: function(response) { return; },
 		onFailure: function() { return; },
-		redirect: null
+		redirect: null,
+		dataContainer: null
 	},
 
 	/**
@@ -124,34 +125,47 @@ cowboy.FormAjax = new Class ({
 	getFormData: function() {
 		var _this = this;
 
+		var data = {};
+
 		this.form.getElements('input[name]').each(function(el) {
 			if (el.getProperty('type') == 'checkbox') {
 				if (el.checked === true) {
-					_this.uploadReq.append(el.name, el.value);
+					data[el.name] = el.value;
 				}
 				else {
-					_this.uploadReq.append(el.name, 0);
+					data[el.name] = 0;
 				}
 			}
 			else if (el.getProperty('type') == 'radio') {
 				if (el.checked === true) {
-					_this.uploadReq.append(el.name, el.value);
+					data[el.name] = el.value;
 				}
 			}
 			else if(el.getProperty('type') == 'file') {
-				_this.uploadReq.append(el.name, el.files[0]);
+				data[el.name] = el.files[0];
 			}
 			else {
-				_this.uploadReq.append(el.name, el.value);
+				data[el.name] = el.value;
 			}
 		});
 
 		this.form.getElements('select[name]').each(function(el){
-			_this.uploadReq.append(el.name, el.value);
+			data[el.name] = el.value;
 		});
 
 		this.form.getElements('textarea[name]').each(function(el){
-			_this.uploadReq.append(el.name, el.value);
+			data[el.name] = el.value;
 		});
+
+		if (this.options.dataContainer !== null) {
+			Object.each(data, function(value, key) {
+				_this.uploadReq.append(_this.options.dataContainer + '[' + key + ']', value);
+			});
+		}
+		else {
+			Object.each(data, function(value, key) {
+				_this.uploadReq.append(key, value);
+			});
+		}
 	}
 });
