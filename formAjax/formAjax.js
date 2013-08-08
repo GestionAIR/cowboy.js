@@ -22,11 +22,13 @@ cowboy.FormAjax = new Class ({
 	 * @constructor
 	 * @param  {Element}	form		Form element
 	 * @param  {Object}		options		Form options
+	 * @param  {Object}		callbacks	
 	 */
-	initialize: function(form, options) {
+	initialize: function(form, options, callbacks) {
 		var _this = this;
 		if (form instanceof HTMLElement) {
 			this.form = form;
+			this.callbacks = callbacks;
 
 			this.options = Object.merge(this.options, options);
 
@@ -47,7 +49,14 @@ cowboy.FormAjax = new Class ({
 				},
 
 				onSuccess: function(response) {
-					return _this.options.onSuccess(JSON.decode(response));
+					var decodeResponse = JSON.decode(response);
+					if (typeof _this.callbacks != 'undefined') {
+						var name = _this.form.getAttribute('name');
+						if (typeof _this.callbacks[name] == 'function') {
+							_this.callbacks[name](decodeResponse);
+						}
+					}
+					return _this.options.onSuccess(decodeResponse);
 				},
 
 				onFailure: function() {
@@ -57,7 +66,7 @@ cowboy.FormAjax = new Class ({
 		}
 		else if (form instanceof Object) {
 			for (var i = form.length - 1; i >= 0; i--) {
-				new cowboy.FormAjax(form[i], options);
+				new cowboy.FormAjax(form[i], options, callbacks);
 			}
 		}
 	},
