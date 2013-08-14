@@ -62,6 +62,7 @@ cowboy.LogBar = new Class({
 				(function () { LOGBAR.hide();}).delay(options.duration);
 			}
 		}
+		return this;
 	},
 
 	/**
@@ -80,6 +81,7 @@ cowboy.LogBar = new Class({
 			// Write that the logbar is down
 			this.status = false;
 		}
+		return this;
 	},
 
 	/**
@@ -93,6 +95,7 @@ cowboy.LogBar = new Class({
 			$(_this.options.idContent).removeClass(status);
 		});
 		$(this.options.idContent).addClass(newStatus);
+		return this;
 	}
 });
 
