@@ -7,7 +7,7 @@ cowboy.Modal = new Class ({
 	Implements: cowboy.Options,
 
 	options: {
-		triggerer: null,
+		trigger: null,
 		transition: 'Expo.easeOut',
 		duration: 500,
 		hiddenClass: 'hidden',
@@ -48,10 +48,19 @@ cowboy.Modal = new Class ({
 			this.url = modal;
 		}
 
-		if (this.options.triggerer) {
-			this.options.triggerer.addEvent('click', function() {
-				_this.showAdapter();
-			});
+		if (this.options.trigger) {
+			if (typeof(this.options.trigger) == 'array') {
+            	this.options.trigger.each(function(trigger) {
+					trigger.addEvent('click', function() {
+						_this.showAdapter();
+					});
+				});
+			}
+			else {
+				this.options.trigger.addEvent('click', function() {
+					_this.showAdapter();
+				});
+			}
 		}
 
 		if (this.options.bckgClass && $$(this.options.bckgClass)) {
