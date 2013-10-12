@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>cowboy.js</title>
+		<style type="text/css">
+			body {
+				margin: 0 auto 0 auto;
+				width: 800px;
+			}
+			h1 {
+				text-align: center;
+			}
+			.hidden { display:none; }
+			
+			.dropzone, .clickzone { text-align:center; border:3px dashed #999; margin:0 auto; line-height:100%; overflow:hidden }
+			.dropzone-error { border-color:red; }
+		</style>
+	</head>
+
+	<body>
+		<h1>Drag And Drop Image</h1>
+
+		<div>
+			<div id="dropzone" class="dropzone"></div>
+			<input type="file" id="file" name="file" />
+		</div>
+
+		<script src="../mootools/mootools-core.js"></script>
+		<script src="../mootools/mootools-more.js"></script>
+		<script src="../cowboy.js"></script>
+		<script src="dragAndDropImage.js"></script>
+		<script type="text/javascript">
+			window.addEvent('domready', function() {
+				dropzone = new cowboy.DragAndDropImage($('dropzone'),$('file'));
+			});
+		</script>
+	</body>
+</html>
