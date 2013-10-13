@@ -1,0 +1,15 @@
+{
+  "name": "cowboy.js",
+  "description": "JS components built on top of Mootools to make GestionAIR (or your own web projects) faster and efficient to use.",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "*",
+    "grunt-contrib-jshint": "*",
+    "grunt-contrib-watch": "*"
+  },
+  "scripts": {
+    "test": "grunt"
+  }
+}
