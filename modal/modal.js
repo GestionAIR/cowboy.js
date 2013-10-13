@@ -50,7 +50,7 @@ cowboy.Modal = new Class ({
 
 		if (this.options.trigger) {
 			if (typeof(this.options.trigger) == 'array') {
-            	this.options.trigger.each(function(trigger) {
+			this.options.trigger.each(function(trigger) {
 					trigger.addEvent('click', function() {
 						_this.showAdapter();
 					});

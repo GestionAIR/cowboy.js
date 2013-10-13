@@ -29,7 +29,7 @@ cowboy.DragAndDropImage = new Class({
 	 * Create a FormAjax
 	 * @constructor
 	 * @param  {Element}	dropzone	div element
- 	 * @param  {Element}	input		input[type='file'] element
+	 * @param  {Element}	input		input[type='file'] element
 	 * @param  {Object}		options		
 	 */
 	initialize: function(dropzone, input, options){
@@ -124,7 +124,7 @@ cowboy.DragAndDropImage = new Class({
 		if(size<=this.options.sizeMax) {
 			// Check if the type is supported 
 			if(this.options.typeSupported.contains(type)) {
-				if(this.options.requiredType!=null) {
+				if(this.options.requiredType!==null) {
 					if(this.options.requiredType==type) {
 						return true;
 					}
@@ -168,17 +168,19 @@ cowboy.DragAndDropImage = new Class({
 						_this.dropzone.set('text',this.options.textImageTooSmall.substitute({"width":_this.options.width,"height":_this.options.height}));
 					}
 					else {
+						var widthOut, heightOut, orientation;
+
 						// Height is too high
 						if((widthIn/heightIn).round(2)<(_this.options.width/_this.options.height).round(2)) {
-							var widthOut = _this.options.width;
-							var heightOut = ((widthOut*heightIn)/widthIn).round();
-							var orientation = 'y';
+							widthOut = _this.options.width;
+							heightOut = ((widthOut*heightIn)/widthIn).round();
+							orientation = 'y';
 						}
 						// Width is too larg
 						else {
-							var heightOut = _this.options.height;
-							var widthOut = ((heightOut*widthIn)/heightIn).round();
-							var orientation = 'x';
+							heightOut = _this.options.height;
+							widthOut = ((heightOut*widthIn)/heightIn).round();
+							orientation = 'x';
 						}
 						// Push the image at an optimized size
 						_this.dropzone.empty();
@@ -188,7 +190,7 @@ cowboy.DragAndDropImage = new Class({
 						_this.input.files[0] = file;
 						_this._move(img,orientation);
 					}	
-				}
+				};
 			};
 			reader.readAsDataURL(file);
 
@@ -215,7 +217,7 @@ cowboy.DragAndDropImage = new Class({
 			'top':0,
 			'left':0,
 			'position':'relative'
-		})
+		});
 		if(orientation=='y') {
 			img.setStyle('cursor','ns-resize');
 			var imgHeight = -img.offsetHeight+this.dropzone.offsetHeight;
