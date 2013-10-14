@@ -10,6 +10,8 @@ cowboy.FormAjax = new Class ({
 		invalidFieldMessage: 'Please fill this field',
 		redirectDelay: 1000,
 		onRequest: function() { return; },
+		onLoadStart: function(event) { return; },
+		onProgress: function(event) { return; },
 		onSuccess: function(response) { return; },
 		onFailure: function() { return; },
 		redirect: null,
@@ -46,6 +48,14 @@ cowboy.FormAjax = new Class ({
 			this.uploadReq = new cowboy.Request({
 				onRequest: function() {
 					return _this.options.onRequest();
+				},
+
+				onLoadStart: function(event) {
+					return _this.options.onLoadStart(event);
+				},
+
+				onProgress: function(event) {
+					return _this.options.onProgress(event);
 				},
 
 				onSuccess: function(response) {

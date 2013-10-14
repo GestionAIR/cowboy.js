@@ -22,10 +22,11 @@
 	<h1>FormAjax demonstration</h1>
 
 	<form action="test.php" id="contactForm">
-		<label for="name">Name: </label><input type="text" name="name" id="name" class="required"><br>
-		<label for="surname">Surname: </label><input type="text" name="surname" id="surname" class="required"><br>
-		<label for="age">Age: </label><input type="number" name="age" id="age" class="required"><br>
-		<label for="email">Email: </label><input type="email" name="email" id="email"><br>
+		<label for="name">Name: </label><input type="text" name="name" id="name" class="required" value="John"><br>
+		<label for="surname">Surname: </label><input type="text" name="surname" id="surname" class="required" value="Doe"><br>
+		<label for="age">Age: </label><input type="number" name="age" id="age" class="required" value="12"><br>
+		<label for="email">Email: </label><input type="email" name="email" id="email" value="john@doe.com"><br>
+		<label for="file">File: </label><input type="file" name="file" id="file" ><br>
 		<input type="submit" value="Submit">
 	</form>
 
@@ -45,15 +46,26 @@
 						if (data['email']) {
 							html += '<br>Email: ' + data['email'];
 						}
+						if (data['file'].file.name) {
+							html += '<br>File: ' + data['file'].file.name;
+						}
 						$('output').set('html', html);
 					}
 					else if (data.status == 'failed') {
 						document.getElement('output').set('html', data.message);
 					}
 				},
-				onRequest: function() {
-					console.log('loading');
+				onRequest: function(event) {
+					console.log('Request...');
+				},
+				onLoadStart: function(event) {
+					console.log('LoadStart...');
+				},
+				onProgress: function(event) {
+					var loaded = event.loaded, total = event.total;
+					console.log(parseInt(loaded / total * 100, 10));
 				}
+
 			});
 		});
 	</script>

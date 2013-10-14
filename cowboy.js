@@ -49,7 +49,10 @@ cowboy.Request = new Class({
 	 * @param  {Object} options Options for the request
 	 */
 	initialize: function(options) {
+		console.log(options);
 		this.xhr = new Browser.Request();
+		this.xhr.addEventListener("loadstart", options.onLoadStart, false);
+		this.xhr.addEventListener("progress", options.onProgress, false);
 		this.formData = new FormData();
 		this.setOptions(options);
 		this.headers = this.options.headers;
