@@ -20,7 +20,7 @@ A class allowing to easily create a modal, based on a portion of the page, or on
 
 ### Options:
 
-* triggerer - (*Element*- default to null) Element that show the modal
+* trigger - (*Element or Array of Elements*- default to null) Element(s) that show the modal
 * transition - (*String* - default to 'Expo.easeOut') Transition to use
 * duration - (*Integer*- default to 500) Duration of the transition
 * hiddenClass - (*String* - default to 'hidden') Class for hidden elements
