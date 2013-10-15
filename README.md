@@ -17,6 +17,13 @@ JS components built on top of [Mootools](http://mootools.net/) to make [GestionA
 - **Input File** : replace the default input file by a more custonizable and cross browser element
 - **Input Length Counter** : A nice counter (maxlength) with some cool options to display the number of remaining chars of a field (input / textarea)
 
+## How to install dev tools
+
+- install Node.js (http://nodejs.org/)
+- install grunt-cli globally: `npm i -g grunt-cli`
+- install dev dependencies: `npm i`
+- use `grunt` to check your code!
+
 ## License
 
 cowboy.js is released under the [MIT License](COPYING).
