@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>cowboy.js</title>
+		<style type="text/css">
+			body {
+				margin: 0 auto 0 auto;
+				width: 960px;
+			}
+			h1 {
+				text-align: center;
+			}
+			.hidden { display:none; }
+			
+			
+		</style>
+	</head>
+
+	<body>
+		<h1>YouTube Player</h1>
+
+		<div>
+			<div id="ytplayer"></div>
+		</div>
+
+		<script src="../mootools/mootools-core.js"></script>
+		<script src="../mootools/mootools-more.js"></script>
+		<script src="../cowboy.js"></script>
+		<script src="youtube.js"></script>
+		<script type="text/javascript">
+			window.addEvent('domready', function() {
+				var videoPlayer = new cowboy.YouTube($('ytplayer'), {
+					width: '960',
+					height: '540',
+					videoId: 'nlzfvOsWJhE',
+					playerVars: {'hd': 1, 'controls':1 },
+					onReady:function(event) { 
+						var player = event.target;
+						player.setPlaybackQuality('hd720');
+						if(!Browser.Platform.ios) player.playVideo();
+						player.pauseVideo();
+					},
+					onStateChange:function(event) { 
+						if(event.name=="ENDED") { 
+							console.log('End of the video')
+						}
+					},
+					onError:function(event){
+						alert(event);
+					}
+				});
+			});
+		</script>
+	</body>
+</html>
