@@ -139,7 +139,7 @@ cowboy.Modal = new Class ({
 						_this.modal = new Element('div', {
 							id: responseTree[0].id,
 							html: responseTree[0].innerHTML,
-							class: responseTree[0].classList
+							'class': responseTree[0].classList
 						});
 						_this.modal.addClass(this.options.hiddenClass);
 						_this.modal.inject($(document.body));
