@@ -36,7 +36,7 @@ cowboy.YouTube = new Class({
 		this._insertPlayerAPI();
 		window.onYouTubePlayerAPIReady = function(){
 			_this._onYouTubePlayerAPIReady();
-		}
+		};
 	}
 	, _insertPlayerAPI: function(){
 		var tag = document.createElement('script');
