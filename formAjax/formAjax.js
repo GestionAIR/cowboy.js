@@ -13,7 +13,7 @@ cowboy.FormAjax = new Class ({
 		onLoadStart: function(event) { return; },
 		onProgress: function(event) { return; },
 		onSuccess: function(response) { return; },
-		onFailure: function() { return; },
+		onFailure: function(response) { return; },
 		redirect: null,
 		dataContainer: null,
 		beforeRequest: function() { return; }
@@ -69,8 +69,15 @@ cowboy.FormAjax = new Class ({
 					return _this.options.onSuccess(decodeResponse);
 				},
 
-				onFailure: function() {
-					return _this.options.onFailure();
+				onFailure: function(response) {
+					var decodeResponse = JSON.decode(response);
+					if (typeof _this.callbacks != 'undefined') {
+						var name = _this.form.getAttribute('name');
+						if (typeof _this.callbacks[name] == 'function') {
+							_this.callbacks[name](decodeResponse);
+						}
+					}
+					return _this.options.onFailure(decodeResponse);
 				}
 			});
 		}
