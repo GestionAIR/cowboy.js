@@ -13,6 +13,7 @@ cowboy.InputFile = new Class({
 		maxSizeMessage: "File size needs to be less than {size}",
 		requiredType: null,
 		requiredTypeMessage: "File type is not correct",
+		classBtn: "btn btn-primary"
 	},
 
 	/**
@@ -35,32 +36,43 @@ cowboy.InputFile = new Class({
 		this.options.minSizeMessage = this.options.minSizeMessage.substitute({"size": minSizeStr});
 		this.options.maxSizeMessage = this.options.maxSizeMessage.substitute({"size": maxSizeStr});
 
+		// Hide the input file
+		this.input.setStyle('display','none');
+
 		// Rebuild the Element
-		var inputFile = new Element('div', {"Class": "inputfile"});
+		var inputGroup = new Element('div', {"class": "input-group"});
 
-		// Inject the original input file into the contener "inputFile"
-		inputFile.inject(this.input, 'after');
-		this.input.inject(inputFile);
+		// Creates Elements for faking input and an upload button
+		this.inputText = new Element('input', {
+			"type": "text",
+			"readonly": "readonly",
+			"class":"form-control"
+		});
+		var inputGroupBtn = new Element('span',{"class":"input-group-btn"});
+		var button = new Element('button',{
+			"class":this.options.classBtn,
+			"type":"button"
+		});
 
-		// Create the fake input file
-		var fakeInputFileContener = new Element('div', {"Class": "fakeinputfile"});
-		this.fakeInputFile = new Element('input', {"type": "text","readonly": "readonly"});
-		var icon = new Element('span', {"Class": "directory"});
-		fakeInputFileContener.inject(inputFile);
-		this.fakeInputFile.inject(fakeInputFileContener);
-		icon.inject(fakeInputFileContener);
+		// Inject elements
+		inputGroup.inject(this.input,'after');
+		this.inputText.inject(inputGroup);
+		button.inject(inputGroupBtn);
+		inputGroupBtn.inject(inputGroup);
 
 		// Add Event to control the value
 		this.input.addEvent('change', _this.check.bind(_this));
 
+		// Add Events to control the input file
+		button.addEvent('click',function(e) { _this.input.click(); });
+
 		// Add Events on fake input and icon to focus the input
-		this.fakeInputFile.addEvent('focus', function (e) {
+		this.inputText.addEvent('focus', function (e) {
 			e.stop();
 			_this.input.focus();
 			_this.input.click();
 			$$('html')[0].focus();
 		});
-		icon.addEvent('click', function () { _this.input.click(); });
 	},
 	
 	/**
@@ -74,27 +86,27 @@ cowboy.InputFile = new Class({
 
 			// Check Type
 			if ((this.options.requiredType === null || file.type == this.options.requiredType || this.options.requiredType.contains(file.type)) && file.size >= this.options.minSize && file.size <= this.options.maxSize) {
-				this.fakeInputFile.value = file.name; // Show filename
-				this.fakeInputFile.removeClass('log-error').addClass('log-validated');
+				this.inputText.value = file.name; // Show filename
+				this.inputText.removeClass('log-error').addClass('log-success');
 			}
 			// Show Warnings
 			else {
 				if (this.options.requiredType !== null && (file.type != this.options.requiredType || !this.options.requiredType.contains(file.type))) {
-					this.fakeInputFile.value = this.options.requiredTypeMessage;
-					this.fakeInputFile.removeClass('log-validated').addClass('log-error');
+					this.inputText.value = this.options.requiredTypeMessage;
+					this.inputText.removeClass('log-success').addClass('log-error');
 				}
 				if (file.size < this.options.minSize) {
-					this.fakeInputFile.value = this.options.minSizeMessage;
-					this.fakeInputFile.removeClass('log-validated').addClass('log-error');
+					this.inputText.value = this.options.minSizeMessage;
+					this.inputText.removeClass('log-success').addClass('log-error');
 				}
 				if (file.size > this.options.maxSize) {
-					this.fakeInputFile.value = this.options.maxSizeMessage;
-					this.fakeInputFile.removeClass('log-validated').addClass('log-error');
+					this.inputText.value = this.options.maxSizeMessage;
+					this.inputText.removeClass('log-success').addClass('log-error');
 				}
 			}
 		}
 
 		// Fallback for old browsers
-		else if (this.value) this.fakeInputFile.value = e.value;
+		else if (this.value) this.inputText.value = e.value;
 	}
 });
